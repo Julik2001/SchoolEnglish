@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SchoolEnglish.Domain
+﻿namespace SchoolEnglish.Domain
 {
     public class TaskPartContent
     {
@@ -14,5 +8,7 @@ namespace SchoolEnglish.Domain
         public string? AudioPath { get; set; }
         public Guid TypeId { get; set; }
         public TaskPartContentType Type { get; set; }
+        public Guid TaskPartId { get; set; }
+        public TaskPart TaskPart { get; set; }
     }
 }

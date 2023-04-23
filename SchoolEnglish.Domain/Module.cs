@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SchoolEnglish.Domain
+﻿namespace SchoolEnglish.Domain
 {
     public class Module
     {
@@ -13,5 +7,7 @@ namespace SchoolEnglish.Domain
         public string Name { get; set; }
         public Guid? ParentId { get; set; }
         public Module? Parent { get; set; }
+        public IEnumerable<Module> Childs { get; set; }
+        public IEnumerable<Task> Tasks { get; set; }
     }
 }
