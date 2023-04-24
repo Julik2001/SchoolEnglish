@@ -16,6 +16,9 @@ namespace SchoolEnglish.Persistence.EntityTypeConfiguration
             builder.HasOne(userAnswer => userAnswer.TaskPart)
                    .WithMany(taskPart => taskPart.Answers)
                    .HasForeignKey(userAnswer => userAnswer.TaskPartId);
+            builder.HasOne(userAnswer => userAnswer.User)
+                   .WithMany(user => user.Answers)
+                   .HasForeignKey(userAnswer => userAnswer.UserId);
         }
     }
 }

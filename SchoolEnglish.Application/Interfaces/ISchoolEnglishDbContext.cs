@@ -12,6 +12,7 @@ namespace SchoolEnglish.Application.Interfaces
         DbSet<TaskPartContent> TaskPartsContent { get; set; }
         DbSet<TaskPartContentType> TaskPartsContentTypes { get; set; }
         DbSet<UserAnswer> UserAnswers { get; set; }
+        DbSet<User> Users { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

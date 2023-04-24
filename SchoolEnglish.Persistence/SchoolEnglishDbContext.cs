@@ -14,6 +14,7 @@ namespace SchoolEnglish.Persistence
         public DbSet<TaskPartContent> TaskPartsContent { get; set; }
         public DbSet<TaskPartContentType> TaskPartsContentTypes { get; set; }
         public DbSet<UserAnswer> UserAnswers { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public SchoolEnglishDbContext(DbContextOptions<SchoolEnglishDbContext> options)
             : base(options) { }
@@ -27,6 +28,7 @@ namespace SchoolEnglish.Persistence
             builder.ApplyConfiguration(new TaskPartContentConfiguration());
             builder.ApplyConfiguration(new TaskPartContentTypeConfiguration());
             builder.ApplyConfiguration(new UserAnswerConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
             base.OnModelCreating(builder);
         }
     }
