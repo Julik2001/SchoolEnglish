@@ -24,6 +24,7 @@ namespace SchoolEnglish.Application.Users.Commands.CreateUser
                 Balance = 0,
                 RoleId = request.RoleId,
             };
+
             await _dbContext.Users.AddAsync(user, cancellationToken);
 
             await _dbContext.SaveChangesAsync(cancellationToken);

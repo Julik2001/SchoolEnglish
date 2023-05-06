@@ -5,18 +5,18 @@ using SchoolEnglish.Application.Common.Helpers;
 using SchoolEnglish.Application.Interfaces;
 using SchoolEnglish.Domain;
 
-namespace SchoolEnglish.Application.Users.Queries.GetUser
+namespace SchoolEnglish.Application.Users.Queries.GetUserByEmailAndPassword
 {
-    public class GetUserHandler : IRequestHandler<GetUserQuery, User>
+    public class GetUserByEmailAndPasswordHandler : IRequestHandler<GetUserByEmailAndPasswordQuery, User>
     {
         private readonly ISchoolEnglishDbContext _dbContext;
 
-        public GetUserHandler(ISchoolEnglishDbContext dbContext)
+        public GetUserByEmailAndPasswordHandler(ISchoolEnglishDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<User> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        public async Task<User> Handle(GetUserByEmailAndPasswordQuery request, CancellationToken cancellationToken)
         {
             var passwordHash = HashPasswordHelper.HashPassword(request.Password);
 

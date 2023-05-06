@@ -8,6 +8,7 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public int Balance { get; set; }
+        public string TeacherCode { get; set; }
         public Guid RoleId { get; set; }
         public Role Role { get; set; }
         public IEnumerable<UserAnswer> Answers { get; set;}

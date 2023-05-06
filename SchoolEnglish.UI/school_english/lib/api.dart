@@ -6,6 +6,7 @@ import 'package:school_english/constants.dart';
 import 'package:school_english/localdata.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/models/register/registerDto.dart';
+import 'package:school_english/models/role/role.dart';
 
 abstract class Api {
   static Dio _client = Dio();
@@ -32,6 +33,43 @@ abstract class Api {
     } catch (ex) {
       debugPrint(ex.toString());
       return null;
+    }
+  }
+
+  static Future<String?> getTeacherCode() async {
+    const url = "$apiUrl/Auth/GetTeacherCode";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
+    }
+  }
+
+  static Future<String?> getUserFullname() async {
+    const url = "$apiUrl/Auth/GetUserFullname";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
+    }
+  }
+
+  static Future<void> updateTeacherCode(String teacherCode) async {
+    final url = "$apiUrl/Auth/UpdateTeacherCode/$teacherCode";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+    } catch (ex) {
+      debugPrint(ex.toString());
     }
   }
 
@@ -84,6 +122,32 @@ abstract class Api {
     }
 
     return submodules;
+  }
+
+  static Future<Role?> getTeacherRole() async {
+    const url = "$apiUrl/Role/GetTeacherRole";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return Role.fromJson(response.data);
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
+    }
+  }
+
+  static Future<Role?> getStudentRole() async {
+    const url = "$apiUrl/Role/GetStudentRole";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return Role.fromJson(response.data);
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
+    }
   }
 
   static Future<bool> checkRoleIsTeacher() async {

@@ -7,6 +7,7 @@ const tabletWidth = 1100.0;
 
 const loginRoute = "login";
 const registerRoute = "register";
+const profileRoute = "profile";
 const teacherCodeRoute = "teacher-code";
 const modulesRoute = "modules";
 const submodulesRoute = "submodules";
@@ -32,7 +33,10 @@ const enterTeacherCodeDescription = "Введите код вашего учит
 
 const profileHeader = "Личный профиль";
 const profileDescription = "";
+const logoutButtonLabel = "Выйти";
 
+const moduleCreateHeader = "Создание модуля";
+const moduleCreateDescription = "Создайте новый модуль";
 const moduleEditHeader = "Редактирование модуля";
 const moduleEditDescription = "Измените модуль";
 

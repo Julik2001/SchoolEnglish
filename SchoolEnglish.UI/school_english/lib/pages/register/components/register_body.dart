@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/validator.dart';
 
-class RegisterBody extends StatefulWidget {
-  const RegisterBody(
-      {super.key, required this.formKey, this.onIsTeacherUserChanged});
+class RegisterBody extends StatelessWidget {
+  RegisterBody(
+      {super.key,
+      required this.formKey,
+      required this.nameController,
+      required this.surnameController,
+      required this.emailController,
+      required this.passwordController,
+      this.onRoleChanged});
 
   final GlobalKey<FormState> formKey;
-  final void Function(bool value)? onIsTeacherUserChanged;
+  final TextEditingController nameController;
+  final TextEditingController surnameController;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final void Function(bool value)? onRoleChanged;
 
-  @override
-  State<RegisterBody> createState() => _RegisterBodyState();
-}
-
-class _RegisterBodyState extends State<RegisterBody> {
-  final _passwordController = TextEditingController();
   bool? isTeacher = false;
 
   @override
@@ -44,10 +46,11 @@ class _RegisterBodyState extends State<RegisterBody> {
               height: singleSpace * 2,
             ),
             Form(
-                key: widget.formKey,
+                key: formKey,
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: surnameController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           border: OutlineInputBorder(),
@@ -66,6 +69,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                       height: singleSpace,
                     ),
                     TextFormField(
+                      controller: nameController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           border: OutlineInputBorder(),
@@ -73,9 +77,9 @@ class _RegisterBodyState extends State<RegisterBody> {
                       keyboardType: TextInputType.name,
                       validator: (name) {
                         if (Validator.isNullOrEmpty(name)) {
-                          return "Введите фамилию!";
+                          return "Введите имя!";
                         } else if (!Validator.validateName(name!)) {
-                          return "Недопустимая фаимилия!";
+                          return "Недопустимая имя!";
                         }
                         return null;
                       },
@@ -84,6 +88,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                       height: singleSpace,
                     ),
                     TextFormField(
+                      controller: emailController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.email),
                           border: OutlineInputBorder(),
@@ -102,7 +107,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                       height: singleSpace,
                     ),
                     TextFormField(
-                      controller: _passwordController,
+                      controller: passwordController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.key),
                           border: OutlineInputBorder(),
@@ -129,7 +134,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                       validator: (password) {
                         if (Validator.isNullOrEmpty(password)) {
                           return "Введите пароль!";
-                        } else if (_passwordController.text != password) {
+                        } else if (passwordController.text != password) {
                           return "Пароли не совпадают!";
                         }
                         return null;
@@ -153,8 +158,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                         if (value == null) return;
                         isTeacher = value == "Учитель";
 
-                        if (widget.onIsTeacherUserChanged != null) {
-                          widget.onIsTeacherUserChanged!(isTeacher!);
+                        if (onRoleChanged != null) {
+                          onRoleChanged!(isTeacher!);
                         }
                       },
                       validator: (value) {

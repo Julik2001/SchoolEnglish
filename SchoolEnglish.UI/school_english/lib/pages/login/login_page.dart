@@ -21,13 +21,13 @@ class _LoginPageState extends State<LoginPage> {
     var jwt = await Api.login(email, password);
     if (jwt != null) {
       LocalData.saveJwt(jwt);
-      goToModulesPage();
+      goToTeacherCodePage();
     } else {
       showLoginError();
     }
   }
 
-  void goToModulesPage() => context.go("/$modulesRoute");
+  void goToTeacherCodePage() => context.go("/$teacherCodeRoute");
 
   void showLoginError() =>
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
+import 'package:school_english/helpers/validator.dart';
+import 'package:school_english/localdata.dart';
 import 'package:school_english/pages/exercise/exercise_page.dart';
 import 'package:school_english/pages/login/login_page.dart';
-import 'package:school_english/pages/modules/modules_page.dart';
+import 'package:school_english/pages/modules/module_edit_page/module_edit_page.dart';
+import 'package:school_english/pages/modules/modules_page/modules_page.dart';
 import 'package:school_english/pages/register/register_page.dart';
 import 'package:school_english/pages/teacher_code/teacher_code_page.dart';
-import 'package:school_english/welcome/welcome_page.dart';
+import 'package:school_english/pages/profile/profile_page.dart';
+import 'package:school_english/pages/welcome/welcome_page.dart';
 
 void main() {
   runApp(const SchoolEnglish());
@@ -17,6 +22,20 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
       path: "/",
       builder: (context, state) {
         return const WelcomePage();
+      },
+      redirect: (context, state) async {
+        var jwt = await LocalData.getJwt();
+        var teacherCode = await LocalData.getTeacherCode();
+        var roleIsModerator = await Api.checkRoleIsModerator();
+        if (!Validator.isNullOrEmpty(jwt) &&
+                !Validator.isNullOrEmpty(teacherCode) ||
+            roleIsModerator) {
+          return "/$modulesRoute";
+        } else if (!Validator.isNullOrEmpty(jwt) &&
+            Validator.isNullOrEmpty(teacherCode)) {
+          return "/$teacherCodeRoute";
+        }
+        return null;
       },
       routes: <RouteBase>[
         GoRoute(
@@ -30,17 +49,21 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
           builder: (context, state) {
             return const RegisterPage();
           },
-          routes: <RouteBase>[
-            GoRoute(
-              path: "$teacherCodeRoute/:isTeacherUser",
-              builder: (context, state) {
-                return TeacherCodePage(
-                    isTeacherUser: state.params["isTeacherUser"] == "true");
-              },
-            ),
-          ],
         ),
       ]),
+  GoRoute(
+    path: "/$teacherCodeRoute",
+    builder: (context, state) {
+      return TeacherCodePage();
+    },
+    redirect: (context, state) async {
+      var teacherCode = await LocalData.getTeacherCode();
+      if (!Validator.isNullOrEmpty(teacherCode)) {
+        return "/$modulesRoute";
+      }
+      return null;
+    },
+  ),
   GoRoute(
     path: "/$modulesRoute",
     builder: (context, state) {
@@ -48,9 +71,18 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
     },
     routes: <RouteBase>[
       GoRoute(
-        path: ":moduleId",
+        path: "$submodulesRoute/:moduleId",
         builder: (context, state) {
           return ModulesPage(moduleId: state.params["moduleId"]);
+        },
+      ),
+      GoRoute(
+        path: moduleEditRoute,
+        builder: (context, state) {
+          return ModuleEditPage(
+            moduleId: state.queryParams["moduleId"],
+            parentId: state.queryParams["parentId"],
+          );
         },
       ),
     ],
@@ -59,6 +91,12 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
     path: "/$exerciseRoute",
     builder: (context, state) {
       return ExercisePage();
+    },
+  ),
+  GoRoute(
+    path: "/$profileRoute",
+    builder: (context, state) {
+      return ProfilePage();
     },
   ),
 ]);

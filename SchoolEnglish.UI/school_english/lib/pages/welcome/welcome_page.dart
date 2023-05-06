@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_english/constants.dart';
-import 'package:school_english/welcome/components/welcome_body.dart';
+import 'package:school_english/pages/welcome/components/welcome_body.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});

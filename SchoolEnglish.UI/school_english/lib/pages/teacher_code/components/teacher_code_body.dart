@@ -4,11 +4,16 @@ import 'package:school_english/helpers/validator.dart';
 
 class TeacherCodeBody extends StatelessWidget {
   const TeacherCodeBody(
-      {super.key, required this.isTeacherUser, this.teacherCode, this.formKey});
+      {super.key,
+      required this.userIsTeacher,
+      this.formKey,
+      this.teacherCode,
+      this.codeController});
 
   final GlobalKey<FormState>? formKey;
-  final bool isTeacherUser;
+  final bool userIsTeacher;
   final String? teacherCode;
+  final TextEditingController? codeController;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class TeacherCodeBody extends StatelessWidget {
               height: singleSpace * 2,
             ),
             Text(
-              isTeacherUser
+              userIsTeacher
                   ? teacherCodeDescription
                   : enterTeacherCodeDescription,
               style: Theme.of(context).textTheme.bodyMedium,
@@ -35,7 +40,7 @@ class TeacherCodeBody extends StatelessWidget {
             const SizedBox(
               height: singleSpace * 2,
             ),
-            isTeacherUser
+            userIsTeacher
                 ? Align(
                     alignment: Alignment.center,
                     child: Card(
@@ -53,6 +58,7 @@ class TeacherCodeBody extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: codeController,
                           decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.pin),
                               border: OutlineInputBorder(),
@@ -61,7 +67,9 @@ class TeacherCodeBody extends StatelessWidget {
                           validator: (code) {
                             if (Validator.isNullOrEmpty(code)) {
                               return "Введите код учителя!";
-                            } else if (!Validator.validateTeacherCode(code!)) {
+                            } else if (code!.length < 4) {
+                              return "Код состоит минимум из 4 цифр!";
+                            } else if (!Validator.validateTeacherCode(code)) {
                               return "Некорректный код!";
                             }
                             return null;

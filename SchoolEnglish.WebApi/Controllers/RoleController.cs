@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SchoolEnglish.Application.Common.Helpers;
 using SchoolEnglish.Application.Roles.Commands.CreateOrUpdateRole;
 using SchoolEnglish.Application.Roles.Commands.DeleteRole;
 using SchoolEnglish.Application.Roles.Queries.CheckUserIsModerator;
 using SchoolEnglish.Application.Roles.Queries.CheckUserIsStudent;
 using SchoolEnglish.Application.Roles.Queries.CheckUserIsTeacher;
 using SchoolEnglish.Application.Roles.Queries.GetRoles;
+using SchoolEnglish.Domain;
 using SchoolEnglish.WebApi.Models;
 using System.Security.Claims;
 
@@ -47,6 +49,18 @@ namespace SchoolEnglish.WebApi.Controllers
             var command = new DeleteRoleCommand { Id = roleId };
             await Mediator.Send(command);
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Role>> GetTeacherRole()
+        {
+            return BaseRolesHelper.TeacherRole;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Role>> GetStudentRole()
+        {
+            return BaseRolesHelper.StudentRole;
         }
 
         [Authorize]

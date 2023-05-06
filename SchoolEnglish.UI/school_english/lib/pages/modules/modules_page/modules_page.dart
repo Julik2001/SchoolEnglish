@@ -39,7 +39,6 @@ class _ModulesPageState extends State<ModulesPage> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ModulesBody(
-                username: "Иванов Иван",
                 modules: snapshot.requireData,
               );
             } else if (snapshot.hasData) {

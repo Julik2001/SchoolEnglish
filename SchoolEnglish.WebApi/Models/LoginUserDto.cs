@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using SchoolEnglish.Application.Common.Mappings;
+using SchoolEnglish.Application.Users.Queries.GetUserByEmailAndPassword;
 using SchoolEnglish.Domain;
 
-namespace SchoolEnglish.Application.Users.Queries.GetUser
+namespace SchoolEnglish.WebApi.Models
 {
     public class LoginUserDto : IMapWith<User>
     {
@@ -11,7 +12,7 @@ namespace SchoolEnglish.Application.Users.Queries.GetUser
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<LoginUserDto, GetUserQuery>()
+            profile.CreateMap<LoginUserDto, GetUserByEmailAndPasswordQuery>()
                 .ForMember(userQuery => userQuery.Email,
                     opt => opt.MapFrom(userDto => userDto.Email))
                 .ForMember(userQuery => userQuery.Password,

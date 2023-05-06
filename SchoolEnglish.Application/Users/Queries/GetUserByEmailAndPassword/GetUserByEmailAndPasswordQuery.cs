@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using SchoolEnglish.Domain;
 
-namespace SchoolEnglish.Application.Users.Queries.GetUser
+namespace SchoolEnglish.Application.Users.Queries.GetUserByEmailAndPassword
 {
-    public class GetUserQuery : IRequest<User>
+    public class GetUserByEmailAndPasswordQuery : IRequest<User>
     {
         public string Email { get; set; }
         public string Password { get; set; }

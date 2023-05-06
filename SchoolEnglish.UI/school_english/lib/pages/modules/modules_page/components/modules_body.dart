@@ -7,9 +7,8 @@ import 'package:school_english/pages/modules/modules_page/components/module_add_
 import 'package:school_english/pages/modules/modules_page/components/module_item.dart';
 
 class ModulesBody extends StatefulWidget {
-  const ModulesBody({super.key, required this.username, required this.modules});
+  const ModulesBody({super.key, required this.modules});
 
-  final String username;
   final List<Module> modules;
 
   @override
@@ -32,9 +31,11 @@ class _ModulesBodyState extends State<ModulesBody> {
     getPermissions();
   }
 
-  void onAddClick() => context.go(Uri(
-      path: "/$modulesRoute/$moduleEditRoute",
-      queryParameters: {"parentId": widget.modules.first.parentId}).toString());
+  void onAddClick() =>
+      context.go(Uri(path: "/$modulesRoute/$moduleEditRoute", queryParameters: {
+        "parentId":
+            widget.modules.isNotEmpty ? widget.modules.first.parentId : null
+      }).toString());
 
   @override
   Widget build(BuildContext context) {
