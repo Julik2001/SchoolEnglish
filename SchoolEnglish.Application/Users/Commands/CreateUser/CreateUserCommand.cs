@@ -1,16 +1,13 @@
 ﻿using MediatR;
-using SchoolEnglish.Domain;
 
-namespace SchoolEnglish.Application.Users.Commands.CreateOrUpdateUser
+namespace SchoolEnglish.Application.Users.Commands.CreateUser
 {
-    public class CreateOrUpdateUserCommand : IRequest<Guid>
+    public class CreateUserCommand : IRequest<Guid>
     {
-        public Guid? Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int Balance { get; set; }
         public Guid RoleId { get; set; }
     }
 }

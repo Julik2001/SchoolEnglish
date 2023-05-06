@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/validator.dart';
 
 class LoginBody extends StatefulWidget {
-  const LoginBody({super.key, required this.formKey});
+  LoginBody(
+      {super.key,
+      required this.formKey,
+      this.emailController,
+      this.passwordController});
 
   final GlobalKey<FormState> formKey;
+  TextEditingController? emailController;
+  TextEditingController? passwordController;
 
   @override
   State<LoginBody> createState() => _LoginBodyState();
@@ -44,6 +47,7 @@ class _LoginBodyState extends State<LoginBody> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: widget.emailController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.email),
                           border: OutlineInputBorder(),
@@ -62,6 +66,7 @@ class _LoginBodyState extends State<LoginBody> {
                       height: singleSpace,
                     ),
                     TextFormField(
+                      controller: widget.passwordController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.key),
                           border: OutlineInputBorder(),
