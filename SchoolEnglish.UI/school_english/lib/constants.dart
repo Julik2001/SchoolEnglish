@@ -39,6 +39,7 @@ const moduleCreateHeader = "Создание модуля";
 const moduleCreateDescription = "Создайте новый модуль";
 const moduleEditHeader = "Редактирование модуля";
 const moduleEditDescription = "Измените модуль";
+const moduleTasksHeader = "Задачи в модуле";
 
 const primaryColor = Color.fromARGB(255, 50, 74, 89);
 const singleSpace = 8.0;

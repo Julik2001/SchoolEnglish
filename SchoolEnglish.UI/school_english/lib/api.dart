@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:school_english/constants.dart';
@@ -62,14 +60,15 @@ abstract class Api {
     }
   }
 
-  static Future<void> updateTeacherCode(String teacherCode) async {
+  static Future<bool> updateTeacherCode(String teacherCode) async {
     final url = "$apiUrl/Auth/UpdateTeacherCode/$teacherCode";
     try {
       final jwt = await LocalData.getJwt();
-      var response =
-          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return true;
     } catch (ex) {
       debugPrint(ex.toString());
+      return false;
     }
   }
 
@@ -115,13 +114,27 @@ abstract class Api {
       final jwt = await LocalData.getJwt();
       var response =
           await _client.get(url, options: Options(headers: getHeaders(jwt)));
-      var json = response.data["submodules"] as List;
+      var json = response.data["modules"] as List;
       submodules = json.map((e) => Module.fromJson(e)).toList();
     } catch (ex) {
       debugPrint(ex.toString());
     }
 
     return submodules;
+  }
+
+  static Future<String?> createOrUpdateModule(Module module) async {
+    const url = "$apiUrl/Module/CreateOrUpdate";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response = await _client.post(url,
+          data: module.toJson(), options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
+    }
   }
 
   static Future<Role?> getTeacherRole() async {

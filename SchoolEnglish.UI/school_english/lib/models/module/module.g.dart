@@ -7,7 +7,7 @@ part of 'module.dart';
 // **************************************************************************
 
 Module _$ModuleFromJson(Map<String, dynamic> json) => Module(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String,
       number: json['number'] as String,
       parentId: json['parentId'] as String?,

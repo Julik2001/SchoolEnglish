@@ -19,7 +19,7 @@ namespace SchoolEnglish.Application.Modules.Queries.GetSubmodules
 
         public async Task<SubmodulesVm> Handle(GetSubmodulesQuery request, CancellationToken cancellationToken)
         {
-            var submodules = await _dbContext.Modules.Where(module => module.ParentId == request.ParentId)
+            var submodules = await _dbContext.Modules.Where(module => module.ParentId == request.ModuleId)
                 .ProjectTo<ModuleDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

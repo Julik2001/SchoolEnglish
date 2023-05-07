@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SchoolEnglish.Application.Interfaces;
-using SchoolEnglish.Domain;
 
 namespace SchoolEnglish.Application.Tasks.Commands.CreateOrUpdateTask
 {

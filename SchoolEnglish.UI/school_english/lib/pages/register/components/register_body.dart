@@ -19,7 +19,6 @@ class RegisterBody extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final void Function(bool value)? onRoleChanged;
-
   bool? isTeacher = false;
 
   @override

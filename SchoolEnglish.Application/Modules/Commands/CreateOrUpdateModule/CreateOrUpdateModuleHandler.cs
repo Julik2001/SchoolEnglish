@@ -9,7 +9,7 @@ namespace SchoolEnglish.Application.Modules.Commands.CreateOrUpdateModule
     {
         private readonly ISchoolEnglishDbContext _dbContext;
 
-        public CreateOrUpdateModuleHandler(ISchoolEnglishDbContext dbContext) =>        
+        public CreateOrUpdateModuleHandler(ISchoolEnglishDbContext dbContext) =>
             _dbContext = dbContext;
 
         public async Task<Guid> Handle(CreateOrUpdateModuleCommand request, CancellationToken cancellationToken)
@@ -19,8 +19,8 @@ namespace SchoolEnglish.Application.Modules.Commands.CreateOrUpdateModule
             {
                 module = await _dbContext.Modules.FirstOrDefaultAsync(module =>
                     module.Id == request.Id, cancellationToken);
-            }            
-            
+            }
+
             if (module == null)
             {
                 module = new Module
@@ -34,11 +34,11 @@ namespace SchoolEnglish.Application.Modules.Commands.CreateOrUpdateModule
             }
             else
             {
-                module.Name= request.Name;
-                module.Number= request.Number;
-                module.ParentId= request.ParentId;
+                module.Name = request.Name;
+                module.Number = request.Number;
+                module.ParentId = request.ParentId;
             }
-            
+
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return module.Id;

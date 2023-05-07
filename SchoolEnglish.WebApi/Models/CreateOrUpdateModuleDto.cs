@@ -14,7 +14,7 @@ namespace SchoolEnglish.WebApi.Models
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateOrUpdateModuleDto, CreateOrUpdateModuleCommand>()
-                .ForMember(moduleCommand => moduleCommand.Id, 
+                .ForMember(moduleCommand => moduleCommand.Id,
                     opt => opt.MapFrom(moduleDto => moduleDto.Id))
                 .ForMember(moduleCommand => moduleCommand.Number,
                     opt => opt.MapFrom(moduleDto => moduleDto.Number))

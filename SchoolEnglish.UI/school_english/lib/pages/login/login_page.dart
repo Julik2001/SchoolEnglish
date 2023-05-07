@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
+import 'package:school_english/helpers/message_builder.dart';
 import 'package:school_english/localdata.dart';
 import 'package:school_english/pages/login/components/login_body.dart';
 
@@ -29,9 +30,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void goToTeacherCodePage() => context.go("/$teacherCodeRoute");
 
-  void showLoginError() =>
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Неверный адрес электронной почты или пароль!")));
+  void showLoginError() => MessageBuilder.showError(
+      context, "Неверный адрес электронной почты или пароль!");
 
   @override
   Widget build(BuildContext context) {

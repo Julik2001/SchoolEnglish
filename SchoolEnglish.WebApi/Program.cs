@@ -22,15 +22,15 @@ builder.Services.AddCors(options =>
     });
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => 
-        options.TokenValidationParameters = new TokenValidationParameters 
-        { 
+    .AddJwtBearer(options =>
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
             ValidateIssuer = true,
             ValidIssuer = JwtParamsHelper.Issuer,
             ValidateAudience = true,
             ValidAudience = JwtParamsHelper.Audience,
             ValidateLifetime = false,
-            ValidateIssuerSigningKey= true,
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = JwtParamsHelper.GetSymmetricSecurityKey(),
         });
 builder.Services.AddAuthorization();

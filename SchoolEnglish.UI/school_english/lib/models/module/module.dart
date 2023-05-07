@@ -4,16 +4,13 @@ part 'module.g.dart';
 
 @JsonSerializable()
 class Module {
-  final String id;
+  final String? id;
   final String number;
   final String name;
   final String? parentId;
 
   const Module(
-      {required this.id,
-      required this.name,
-      required this.number,
-      this.parentId});
+      {this.id, required this.name, required this.number, this.parentId});
 
   factory Module.fromJson(Map<String, dynamic> json) => _$ModuleFromJson(json);
 

@@ -15,8 +15,12 @@ class AppBarBuilder {
     return fullname;
   }
 
-  static AppBar buildUserAppBar(BuildContext context) {
+  static AppBar buildUserAppBar(BuildContext context,
+      [void Function()? onBack]) {
     return AppBar(
+      leading: onBack != null
+          ? IconButton(onPressed: onBack, icon: const Icon(Icons.arrow_back))
+          : null,
       title: FutureBuilder(
         future: _getUserFullname(),
         builder: (context, snapshot) {

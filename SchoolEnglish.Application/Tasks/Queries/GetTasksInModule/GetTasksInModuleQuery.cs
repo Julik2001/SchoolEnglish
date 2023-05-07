@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using SchoolEnglish.Domain;
 
 namespace SchoolEnglish.Application.Tasks.Queries.GetTasksInModule
 {

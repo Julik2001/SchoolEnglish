@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:school_english/pages/components/appbar_builder.dart';
+import 'package:school_english/helpers/appbar_builder.dart';
 import 'package:school_english/pages/profile/components/profile_body.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -14,7 +14,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarBuilder.buildUserAppBar(context),
-      body: ProfileBody(),
+      body: const ProfileBody(),
     );
   }
 }

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
+import 'package:school_english/helpers/message_builder.dart';
+import 'package:school_english/helpers/validator.dart';
+import 'package:school_english/localdata.dart';
 import 'package:school_english/models/register/registerDto.dart';
 import 'package:school_english/pages/register/components/register_body.dart';
 
@@ -37,10 +40,11 @@ class _RegisterPageState extends State<RegisterPage> {
         password: _passwordController.text,
         roleId: role.id);
 
-    var userId = await Api.register(registerDto);
-    if (userId == null || userId.isEmpty) isSuccess = false;
+    var jwt = await Api.register(registerDto);
+    if (Validator.isNullOrEmpty(jwt)) isSuccess = false;
 
     if (isSuccess) {
+      LocalData.saveJwt(jwt!);
       goToTeacherCodePage();
     } else {
       showRegisterError();
@@ -50,10 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void goToTeacherCodePage() => context.go("/$teacherCodeRoute");
 
   void showRegisterError() =>
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Ошибка при регистрации!"),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      ));
+      MessageBuilder.showError(context, "Ошибка при регистрации!");
 
   @override
   Widget build(BuildContext context) {

@@ -39,7 +39,7 @@ namespace SchoolEnglish.Application.TaskParts.Commands.CreateOrUpdateTaskPart
                 taskPart.Number = request.Number;
                 taskPart.RightAnswer = request.RightAnswer;
                 taskPart.ClueText = request.ClueText;
-                taskPart.ClueCost= request.ClueCost;
+                taskPart.ClueCost = request.ClueCost;
                 taskPart.TaskId = request.TaskId;
             }
 

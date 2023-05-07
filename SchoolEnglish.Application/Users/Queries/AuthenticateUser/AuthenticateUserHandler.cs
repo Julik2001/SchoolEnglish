@@ -17,9 +17,9 @@ namespace SchoolEnglish.Application.Users.Queries.AuthenticateUser
             };
 
             var jwt = new JwtSecurityToken(
-                            issuer: JwtParamsHelper.Issuer, 
-                            audience: JwtParamsHelper.Audience, 
-                            claims: claims, 
+                            issuer: JwtParamsHelper.Issuer,
+                            audience: JwtParamsHelper.Audience,
+                            claims: claims,
                             signingCredentials: new SigningCredentials(JwtParamsHelper.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);

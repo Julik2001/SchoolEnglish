@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SchoolEnglish.Application.Common.Mappings;
-using SchoolEnglish.Domain;
 
 namespace SchoolEnglish.Application.Tasks.Queries.GetTasksInModule
 {

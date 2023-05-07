@@ -3,22 +3,17 @@ import 'package:go_router/go_router.dart';
 import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/validator.dart';
 
-class LoginBody extends StatefulWidget {
-  LoginBody(
+class LoginBody extends StatelessWidget {
+  const LoginBody(
       {super.key,
       required this.formKey,
       this.emailController,
       this.passwordController});
 
   final GlobalKey<FormState> formKey;
-  TextEditingController? emailController;
-  TextEditingController? passwordController;
+  final TextEditingController? emailController;
+  final TextEditingController? passwordController;
 
-  @override
-  State<LoginBody> createState() => _LoginBodyState();
-}
-
-class _LoginBodyState extends State<LoginBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,11 +38,11 @@ class _LoginBodyState extends State<LoginBody> {
               height: singleSpace * 2,
             ),
             Form(
-                key: widget.formKey,
+                key: formKey,
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: widget.emailController,
+                      controller: emailController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.email),
                           border: OutlineInputBorder(),
@@ -66,7 +61,7 @@ class _LoginBodyState extends State<LoginBody> {
                       height: singleSpace,
                     ),
                     TextFormField(
-                      controller: widget.passwordController,
+                      controller: passwordController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.key),
                           border: OutlineInputBorder(),

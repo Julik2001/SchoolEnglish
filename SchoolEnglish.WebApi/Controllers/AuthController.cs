@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using SchoolEnglish.Application.Users.Commands.CreateUser;
-using SchoolEnglish.Application.Users.Queries.AuthenticateUser;
-using SchoolEnglish.Application.Users.Queries.GetUserById;
-using SchoolEnglish.Application.Users.Queries.GetUserByEmailAndPassword;
-using SchoolEnglish.WebApi.Models;
-using SchoolEnglish.Application.Common.Helpers;
-using SchoolEnglish.Application.Users.Commands.GenerateUserTeacherCode;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using SchoolEnglish.Application.Common.Helpers;
+using SchoolEnglish.Application.Users.Commands.CreateUser;
+using SchoolEnglish.Application.Users.Commands.GenerateUserTeacherCode;
 using SchoolEnglish.Application.Users.Commands.UpdateUserTeacherCode;
+using SchoolEnglish.Application.Users.Queries.AuthenticateUser;
+using SchoolEnglish.Application.Users.Queries.GetUserByEmailAndPassword;
+using SchoolEnglish.Application.Users.Queries.GetUserById;
+using SchoolEnglish.WebApi.Models;
+using System.Security.Claims;
 
 namespace SchoolEnglish.WebApi.Controllers
 {
@@ -42,8 +42,8 @@ namespace SchoolEnglish.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> Register([FromBody] RegisterUserDto registerUserDto)
         {
-            var createUsercommand = _mapper.Map<CreateUserCommand>(registerUserDto);
-            var userId = await Mediator.Send(createUsercommand);
+            var createUserCommand = _mapper.Map<CreateUserCommand>(registerUserDto);
+            var userId = await Mediator.Send(createUserCommand);
 
             var getUserQuery = new GetUserByIdQuery { UserId = userId };
             var user = await Mediator.Send(getUserQuery);
@@ -87,9 +87,9 @@ namespace SchoolEnglish.WebApi.Controllers
             if (roleClaim == null)
             {
                 return BadRequest();
-            } 
+            }
             else if (Guid.Parse(roleClaim.Value) != BaseRolesHelper.TeacherRole.Id)
-            { 
+            {
                 return Forbid();
             }
 

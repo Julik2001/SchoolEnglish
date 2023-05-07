@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
 import 'package:school_english/localdata.dart';
-import 'package:school_english/pages/components/appbar_builder.dart';
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({super.key});
 
   Future<void> logout() async {
-    await LocalData.saveJwt("");
+    await LocalData.clear();
   }
 
   @override
@@ -39,7 +37,7 @@ class ProfileBody extends StatelessWidget {
                 onPressed: () {
                   logout().whenComplete(() => context.go("/"));
                 },
-                child: Text(logoutButtonLabel)),
+                child: const Text(logoutButtonLabel)),
           ],
         ),
       ),

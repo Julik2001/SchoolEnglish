@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Diagnostics.Contracts;
 
 namespace SchoolEnglish.Application.UserAnswers.Commands.DeleteUserAnswer
 {

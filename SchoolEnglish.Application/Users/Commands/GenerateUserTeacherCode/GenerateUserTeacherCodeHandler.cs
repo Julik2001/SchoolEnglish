@@ -16,11 +16,12 @@ namespace SchoolEnglish.Application.Users.Commands.GenerateUserTeacherCode
         {
             var codes = await _dbContext.Users.Where(user => user.RoleId == BaseRolesHelper.TeacherRole.Id && user.TeacherCode != null)
                 .Select(user => user.TeacherCode).ToListAsync();
-            
+
             var lastCode = 1;
             if (codes.Count > 0)
             {
                 lastCode = codes.Max(code => int.Parse(code));
+                lastCode++;
             }
 
             var teacherCode = lastCode.ToString();

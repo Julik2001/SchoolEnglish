@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using SchoolEnglish.Application.Common.Mappings;
-using SchoolEnglish.Application.Modules.Commands.CreateOrUpdateModule;
-using SchoolEnglish.Application.Users.Commands.CreateOrUpdateUser;
 using SchoolEnglish.Application.Users.Commands.CreateUser;
-using SchoolEnglish.Domain;
 
 namespace SchoolEnglish.WebApi.Models
 {

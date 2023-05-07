@@ -32,7 +32,7 @@ namespace SchoolEnglish.Application.Roles.Commands.CreateOrUpdateRole
             }
             else
             {
-                role.Name= request.Name;
+                role.Name = request.Name;
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);

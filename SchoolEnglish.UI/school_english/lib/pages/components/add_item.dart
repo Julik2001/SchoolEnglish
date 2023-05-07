@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:school_english/constants.dart';
 
-class ModuleAddItem extends StatelessWidget {
-  const ModuleAddItem({super.key, this.onClick});
+class AddItem extends StatelessWidget {
+  const AddItem({super.key, this.onClick});
 
   final void Function()? onClick;
 

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SchoolEnglish.Application.Interfaces;
 using SchoolEnglish.Application.Common.Exceptions;
+using SchoolEnglish.Application.Interfaces;
 
 namespace SchoolEnglish.Application.Modules.Commands.DeleteModule
 {

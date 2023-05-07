@@ -26,11 +26,11 @@ namespace SchoolEnglish.Application.Users.Commands.CreateOrUpdateUser
             {
                 throw new NotFoundException(nameof(user), request.Id);
             }
-            
+
             user.Name = request.Name;
             user.Surname = request.Surname;
             user.RoleId = request.RoleId;
-            
+
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return user.Id;

@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using AutoMapper;
+﻿using AutoMapper;
+using System.Reflection;
 
 namespace SchoolEnglish.Application.Common.Mappings
 {

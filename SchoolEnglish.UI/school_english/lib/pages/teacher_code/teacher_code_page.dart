@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
+import 'package:school_english/helpers/message_builder.dart';
+import 'package:school_english/localdata.dart';
 import 'package:school_english/pages/teacher_code/components/teacher_code_body.dart';
 
 class TeacherCodePage extends StatefulWidget {
@@ -37,9 +39,17 @@ class _TeacherCodePageState extends State<TeacherCodePage> {
   }
 
   void updateTeacherCode() async {
-    await Api.updateTeacherCode(_codeController.text);
-    goToModulesPage();
+    bool isSuccess = await Api.updateTeacherCode(_codeController.text);
+    if (isSuccess) {
+      await LocalData.saveTeacherCode(_codeController.text);
+      goToModulesPage();
+    } else {
+      showUpdateTeacherCodeError();
+    }
   }
+
+  void showUpdateTeacherCodeError() =>
+      MessageBuilder.showError(context, "Неверный код учителя!");
 
   void goToModulesPage() => context.go("/$modulesRoute");
 
@@ -64,6 +74,7 @@ class _TeacherCodePageState extends State<TeacherCodePage> {
                   updateTeacherCode();
                 } else if (userIsTeacher) {
                   goToModulesPage();
+                  LocalData.saveTeacherCode(_teacherCode!);
                 }
               },
               child: const Icon(Icons.arrow_forward))

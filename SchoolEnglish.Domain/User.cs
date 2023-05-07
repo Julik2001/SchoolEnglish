@@ -11,6 +11,6 @@
         public string TeacherCode { get; set; }
         public Guid RoleId { get; set; }
         public Role Role { get; set; }
-        public IEnumerable<UserAnswer> Answers { get; set;}
+        public IEnumerable<UserAnswer> Answers { get; set; }
     }
 }

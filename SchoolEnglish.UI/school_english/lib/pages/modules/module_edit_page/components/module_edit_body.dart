@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:school_english/constants.dart';
+import 'package:school_english/models/task/task.dart';
+import 'package:school_english/pages/components/add_item.dart';
+import 'package:school_english/pages/modules/module_edit_page/components/task_item.dart';
 
-class ModuleEditBody extends StatefulWidget {
+class ModuleEditBody extends StatelessWidget {
   const ModuleEditBody(
       {super.key,
       required this.formKey,
       this.nameController,
-      this.numberController});
+      this.numberController,
+      required this.moduleTasks});
 
   final GlobalKey<FormState> formKey;
   final TextEditingController? nameController;
   final TextEditingController? numberController;
+  final List<Task> moduleTasks;
 
-  @override
-  State<ModuleEditBody> createState() => _ModuleEditBodyState();
-}
-
-class _ModuleEditBodyState extends State<ModuleEditBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,11 +41,11 @@ class _ModuleEditBodyState extends State<ModuleEditBody> {
               height: singleSpace * 2,
             ),
             Form(
-                key: widget.formKey,
+                key: formKey,
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: widget.nameController,
+                      controller: nameController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.abc),
                           border: OutlineInputBorder(),
@@ -56,7 +56,7 @@ class _ModuleEditBodyState extends State<ModuleEditBody> {
                       height: singleSpace,
                     ),
                     TextFormField(
-                      controller: widget.numberController,
+                      controller: numberController,
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.numbers),
                           border: OutlineInputBorder(),
@@ -67,10 +67,29 @@ class _ModuleEditBodyState extends State<ModuleEditBody> {
                       height: singleSpace * 2,
                     ),
                   ],
-                ))
+                )),
+            Text(
+              moduleTasksHeader,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(
+              height: singleSpace * 2,
+            ),
+            ...buildTasks(),
+            const AddItem(),
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> buildTasks() {
+    List<Widget> taskItems = [];
+    for (var task in moduleTasks) {
+      taskItems.add(Padding(
+          padding: const EdgeInsets.all(singleSpace / 2),
+          child: TaskItem(header: task.header)));
+    }
+    return taskItems;
   }
 }

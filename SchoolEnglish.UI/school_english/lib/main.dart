@@ -54,11 +54,12 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
   GoRoute(
     path: "/$teacherCodeRoute",
     builder: (context, state) {
-      return TeacherCodePage();
+      return const TeacherCodePage();
     },
     redirect: (context, state) async {
       var teacherCode = await LocalData.getTeacherCode();
-      if (!Validator.isNullOrEmpty(teacherCode)) {
+      var roleIsModerator = await Api.checkRoleIsModerator();
+      if (!Validator.isNullOrEmpty(teacherCode) || roleIsModerator) {
         return "/$modulesRoute";
       }
       return null;
@@ -69,34 +70,26 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
     builder: (context, state) {
       return const ModulesPage();
     },
-    routes: <RouteBase>[
-      GoRoute(
-        path: "$submodulesRoute/:moduleId",
-        builder: (context, state) {
-          return ModulesPage(moduleId: state.params["moduleId"]);
-        },
-      ),
-      GoRoute(
-        path: moduleEditRoute,
-        builder: (context, state) {
-          return ModuleEditPage(
-            moduleId: state.queryParams["moduleId"],
-            parentId: state.queryParams["parentId"],
-          );
-        },
-      ),
-    ],
+  ),
+  GoRoute(
+    path: "/$moduleEditRoute",
+    builder: (context, state) {
+      return ModuleEditPage(
+        moduleId: state.queryParams["moduleId"],
+        parentId: state.queryParams["parentId"],
+      );
+    },
   ),
   GoRoute(
     path: "/$exerciseRoute",
     builder: (context, state) {
-      return ExercisePage();
+      return const ExercisePage();
     },
   ),
   GoRoute(
     path: "/$profileRoute",
     builder: (context, state) {
-      return ProfilePage();
+      return const ProfilePage();
     },
   ),
 ]);

@@ -43,7 +43,7 @@ namespace SchoolEnglish.WebApi.Controllers
         [HttpGet("{moduleId}")]
         public async Task<ActionResult<SubmodulesVm>> GetSubmodules(Guid moduleId)
         {
-            var query = new GetSubmodulesQuery { ParentId = moduleId };
+            var query = new GetSubmodulesQuery { ModuleId = moduleId };
             var vm = await Mediator.Send(query);
             return Ok(vm);
         }

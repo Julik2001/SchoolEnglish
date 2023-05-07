@@ -4,7 +4,7 @@ using SchoolEnglish.Domain;
 
 namespace SchoolEnglish.Persistence.EntityTypeConfiguration
 {
-    public  class TaskPartConfiguration : IEntityTypeConfiguration<TaskPart>
+    public class TaskPartConfiguration : IEntityTypeConfiguration<TaskPart>
     {
         public void Configure(EntityTypeBuilder<TaskPart> builder)
         {
