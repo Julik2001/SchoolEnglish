@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SchoolEnglish.Application.Common.Helpers;
 using SchoolEnglish.Domain;
 
 namespace SchoolEnglish.Persistence.EntityTypeConfiguration
@@ -12,6 +13,8 @@ namespace SchoolEnglish.Persistence.EntityTypeConfiguration
             builder.HasIndex(taskPartContentType => taskPartContentType.Id).IsUnique();
 
             builder.Property(taskPartContentType => taskPartContentType.Name).HasMaxLength(256);
+
+            builder.HasData(BaseTaskPartContentTypesHelper.GetBaseTypes());
         }
     }
 }
