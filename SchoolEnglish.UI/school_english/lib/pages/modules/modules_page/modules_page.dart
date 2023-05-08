@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_english/api.dart';
+import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/message_builder.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/helpers/appbar_builder.dart';
-import 'package:school_english/pages/components/base_body.dart';
+import 'package:school_english/pages/modules/modules_page/components/modules_base_body.dart';
 import 'package:school_english/pages/modules/modules_page/components/modules_body.dart';
 
 class ModulesPage extends StatefulWidget {
@@ -58,12 +60,13 @@ class _ModulesPageState extends State<ModulesPage> {
                   });
                 }
               : null),
-      body: BaseBody(
+      body: ModulesBaseBody(
         child: FutureBuilder(
           future: modules,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ModulesBody(
+                isModerator: roleIsModerator,
                 modules: snapshot.requireData,
                 onModuleClick: (newModuleId) {
                   setState(() {

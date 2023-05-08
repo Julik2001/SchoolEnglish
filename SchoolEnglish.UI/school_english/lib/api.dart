@@ -5,6 +5,7 @@ import 'package:school_english/localdata.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/models/register/registerDto.dart';
 import 'package:school_english/models/role/role.dart';
+import 'package:school_english/models/task/task.dart';
 
 abstract class Api {
   static Dio _client = Dio();
@@ -137,6 +138,21 @@ abstract class Api {
     }
   }
 
+  static Future<bool> deleteModule(String moduleId) async {
+    final url = "$apiUrl/Module/Delete/$moduleId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.delete(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      return true;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
+  }
+
   static Future<Role?> getTeacherRole() async {
     const url = "$apiUrl/Role/GetTeacherRole";
     try {
@@ -199,6 +215,54 @@ abstract class Api {
     } catch (ex) {
       debugPrint(ex.toString());
       return false;
+    }
+  }
+
+  static Future<List<Task>> getTasks(String moduleId) async {
+    List<Task> tasks = [];
+    final url = "$apiUrl/Task/GetTasksInModule/$moduleId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data["tasks"] as List;
+      tasks = json.map((e) => Task.fromJson(e)).toList();
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return tasks;
+  }
+
+  static Future<Task?> getTask(String taskId) async {
+    Task? task;
+    final url = "$apiUrl/Task/GetTask/$taskId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      task = Task.fromJson(json);
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return task;
+  }
+
+  static Future<String?> createOrUpdateTask(Task task) async {
+    const url = "$apiUrl/Task/CreateOrUpdate";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response = await _client.post(url,
+          data: task.toJson(), options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
     }
   }
 }

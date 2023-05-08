@@ -4,7 +4,7 @@ part 'task.g.dart';
 
 @JsonSerializable()
 class Task {
-  final String id;
+  final String? id;
   final String moduleId;
   final String header;
   final int reward;

@@ -7,7 +7,7 @@ part of 'task.dart';
 // **************************************************************************
 
 Task _$TaskFromJson(Map<String, dynamic> json) => Task(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       moduleId: json['moduleId'] as String,
       header: json['header'] as String,
       reward: json['reward'] as int,

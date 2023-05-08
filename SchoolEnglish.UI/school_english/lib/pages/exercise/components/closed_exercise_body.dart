@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_english/constants.dart';
-import 'package:school_english/pages/components/base_body.dart';
+import 'package:school_english/pages/modules/modules_page/components/modules_base_body.dart';
 
 class ClosedExerciseBody extends StatefulWidget {
   const ClosedExerciseBody({super.key});
@@ -15,7 +15,7 @@ class _ClosedExerciseBodyState extends State<ClosedExerciseBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseBody(
+    return ModulesBaseBody(
         child: Column(
       children: [
         Padding(

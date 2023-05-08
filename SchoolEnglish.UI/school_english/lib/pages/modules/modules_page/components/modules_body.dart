@@ -9,12 +9,16 @@ class ModulesBody extends StatefulWidget {
   const ModulesBody(
       {super.key,
       required this.modules,
+      this.isModerator = false,
       this.onModuleClick,
-      this.isModerator = false});
+      this.onAddModuleClick,
+      this.onEditModuleClick});
 
+  final bool isModerator;
   final List<Module> modules;
   final void Function(String? moduleId)? onModuleClick;
-  final bool isModerator;
+  final void Function()? onAddModuleClick;
+  final void Function()? onEditModuleClick;
 
   @override
   State<ModulesBody> createState() => _ModulesBodyState();
@@ -22,7 +26,7 @@ class ModulesBody extends StatefulWidget {
 
 class _ModulesBodyState extends State<ModulesBody> {
   void onAddClick() =>
-      context.go(Uri(path: "/$moduleEditRoute", queryParameters: {
+      context.go(Uri(path: "/$moduleCreateRoute", queryParameters: {
         "parentId":
             widget.modules.isNotEmpty ? widget.modules.first.parentId : null
       }).toString());

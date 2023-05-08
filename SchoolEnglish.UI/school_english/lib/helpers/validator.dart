@@ -16,4 +16,9 @@ class Validator {
   static bool validateTeacherCode(String code) {
     return RegExp(r"^[0-9]+").hasMatch(code);
   }
+
+  static bool validateStringNumber(String number) {
+    var parsedNumber = int.tryParse(number);
+    return parsedNumber != null;
+  }
 }

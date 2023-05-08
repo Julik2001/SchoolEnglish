@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:school_english/constants.dart';
 
-class BaseBody extends StatelessWidget {
-  const BaseBody({super.key, required this.child});
+class ModulesBaseBody extends StatelessWidget {
+  const ModulesBaseBody({super.key, required this.child});
 
   final Widget child;
 
