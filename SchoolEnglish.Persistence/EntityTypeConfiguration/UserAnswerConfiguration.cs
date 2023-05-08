@@ -15,10 +15,12 @@ namespace SchoolEnglish.Persistence.EntityTypeConfiguration
 
             builder.HasOne(userAnswer => userAnswer.TaskPart)
                    .WithMany(taskPart => taskPart.Answers)
-                   .HasForeignKey(userAnswer => userAnswer.TaskPartId);
+                   .HasForeignKey(userAnswer => userAnswer.TaskPartId)
+                   .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(userAnswer => userAnswer.User)
                    .WithMany(user => user.Answers)
-                   .HasForeignKey(userAnswer => userAnswer.UserId);
+                   .HasForeignKey(userAnswer => userAnswer.UserId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

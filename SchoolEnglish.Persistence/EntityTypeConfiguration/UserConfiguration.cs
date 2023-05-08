@@ -21,7 +21,8 @@ namespace SchoolEnglish.Persistence.EntityTypeConfiguration
 
             builder.HasOne(user => user.Role)
                    .WithMany(role => role.Users)
-                   .HasForeignKey(user => user.RoleId);
+                   .HasForeignKey(user => user.RoleId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -16,7 +16,8 @@ namespace SchoolEnglish.Persistence.EntityTypeConfiguration
 
             builder.HasOne(module => module.Parent)
                    .WithMany(module => module.Childs)
-                   .HasForeignKey((Module module) => module.ParentId);
+                   .HasForeignKey((Module module) => module.ParentId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

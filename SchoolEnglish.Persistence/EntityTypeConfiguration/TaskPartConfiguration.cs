@@ -18,7 +18,8 @@ namespace SchoolEnglish.Persistence.EntityTypeConfiguration
 
             builder.HasOne(taskPart => taskPart.Task)
                    .WithMany(task => task.Parts)
-                   .HasForeignKey(taskPart => taskPart.TaskId);
+                   .HasForeignKey(taskPart => taskPart.TaskId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

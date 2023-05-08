@@ -17,10 +17,12 @@ namespace SchoolEnglish.Persistence.EntityTypeConfiguration
 
             builder.HasOne(taskPartContent => taskPartContent.Type)
                    .WithMany(taskPartContentType => taskPartContentType.TaskPartContentList)
-                   .HasForeignKey(taskPartContent => taskPartContent.TypeId);
+                   .HasForeignKey(taskPartContent => taskPartContent.TypeId)
+                   .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(taskPartContent => taskPartContent.TaskPart)
                    .WithOne(taskPart => taskPart.Content)
-                   .HasForeignKey((TaskPartContent taskPartContent) => taskPartContent.TaskPartId);
+                   .HasForeignKey((TaskPartContent taskPartContent) => taskPartContent.TaskPartId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
