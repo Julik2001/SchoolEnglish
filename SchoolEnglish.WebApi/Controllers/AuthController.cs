@@ -83,16 +83,6 @@ namespace SchoolEnglish.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<string>> GetTeacherCode()
         {
-            var roleClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimsIdentity.DefaultRoleClaimType);
-            if (roleClaim == null)
-            {
-                return BadRequest();
-            }
-            else if (Guid.Parse(roleClaim.Value) != BaseRolesHelper.TeacherRole.Id)
-            {
-                return Forbid();
-            }
-
             var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimsIdentity.DefaultNameClaimType);
             if (userIdClaim == null)
             {

@@ -15,11 +15,8 @@ namespace SchoolEnglish.Application.TaskPartsContent.Commands.CreateOrUpdateTask
         public async Task<Guid> Handle(CreateOrUpdateTaskPartContentCommand request, CancellationToken cancellationToken)
         {
             TaskPartContent? taskPartContent = null;
-            if (request.Id != null && request.Id != Guid.Empty)
-            {
-                taskPartContent = await _dbContext.TaskPartsContent.FirstOrDefaultAsync(role =>
-                    role.Id == request.Id, cancellationToken);
-            }
+            taskPartContent = await _dbContext.TaskPartsContent.FirstOrDefaultAsync(content =>
+                    content.TaskPartId == request.TaskPartId, cancellationToken);
 
             if (taskPartContent == null)
             {
@@ -27,6 +24,8 @@ namespace SchoolEnglish.Application.TaskPartsContent.Commands.CreateOrUpdateTask
                 {
                     Id = Guid.NewGuid(),
                     Text = request.Text,
+                    TextToRead = request.TextToRead,
+                    AnswerVariants = request.AnswerVariants,
                     ImagePath = request.ImagePath,
                     AudioPath = request.AudioPath,
                     TypeId = request.TypeId,
@@ -37,6 +36,8 @@ namespace SchoolEnglish.Application.TaskPartsContent.Commands.CreateOrUpdateTask
             else
             {
                 taskPartContent.Text = request.Text;
+                taskPartContent.TextToRead = request.TextToRead;
+                taskPartContent.AnswerVariants = request.AnswerVariants;
                 taskPartContent.ImagePath = request.ImagePath;
                 taskPartContent.AudioPath = request.AudioPath;
                 taskPartContent.TypeId = request.TypeId;

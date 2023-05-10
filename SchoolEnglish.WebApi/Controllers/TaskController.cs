@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolEnglish.Application.Tasks.Commands.CreateOrUpdateTask;
+using SchoolEnglish.Application.Tasks.Commands.DeleteTask;
 using SchoolEnglish.Application.Tasks.Queries.GetTask;
 using SchoolEnglish.Application.Tasks.Queries.GetTasksInModule;
 using SchoolEnglish.WebApi.Models;
@@ -43,6 +44,15 @@ namespace SchoolEnglish.WebApi.Controllers
             var command = _mapper.Map<CreateOrUpdateTaskCommand>(createOrUpdateTaskDto);
             var taskId = await Mediator.Send(command);
             return Ok(taskId);
+        }
+
+        [Authorize]
+        [HttpDelete("{taskId}")]
+        public async Task<IActionResult> Delete(Guid taskId)
+        {
+            var command = new DeleteTaskCommand { Id = taskId };
+            await Mediator.Send(command);
+            return Ok();
         }
     }
 }

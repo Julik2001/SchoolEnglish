@@ -4,14 +4,14 @@ import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/message_builder.dart';
 import 'package:school_english/models/task/task.dart';
+import 'package:school_english/models/task_part/taskpart.dart';
 import 'package:school_english/pages/error_page/error_page.dart';
 import 'package:school_english/pages/tasks/task_edit_page/components/task_edit_body.dart';
 
 class TaskEditPage extends StatefulWidget {
-  const TaskEditPage({super.key, required this.taskId, required this.moduleId});
+  const TaskEditPage({super.key, required this.taskId});
 
-  final String? taskId;
-  final String moduleId;
+  final String taskId;
 
   @override
   State<TaskEditPage> createState() => _TaskEditPageState();
@@ -22,39 +22,67 @@ class _TaskEditPageState extends State<TaskEditPage> {
   final TextEditingController _headerContoller = TextEditingController();
   final TextEditingController _rewardContoller = TextEditingController();
   late Future<Task?>? task;
+  late Future<List<TaskPart>>? taskParts;
+  String moduleId = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    task = widget.taskId != null ? Api.getTask(widget.taskId!) : null;
+    task = Api.getTask(widget.taskId);
+    taskParts = Api.getTaskParts(widget.taskId);
   }
 
-  void goToModulesPage() => context.go(Uri(
-      path: "/$moduleEditRoute",
-      queryParameters: {"moduleId": widget.moduleId}).toString());
+  void updateTask() async {
+    var task = Task(
+      id: widget.taskId,
+      header: _headerContoller.text,
+      reward: int.parse(_rewardContoller.text),
+      moduleId: moduleId,
+    );
+
+    var taskId = await Api.createOrUpdateTask(task);
+    if (taskId != null) {
+      setState(() {});
+      goToModuleEditPage();
+    } else {
+      showUpdateError();
+    }
+  }
+
+  void showUpdateError() =>
+      MessageBuilder.showError(context, "Ошибка при сохранении задания!");
+
+  void goToModuleEditPage() => context.go(
+      Uri(path: "/$moduleEditRoute", queryParameters: {"moduleId": moduleId})
+          .toString());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => goToModulesPage(),
+            onPressed: () => goToModuleEditPage(),
             icon: const Icon(Icons.arrow_back)),
       ),
       body: FutureBuilder(
-        future: Future.wait([task!]),
+        future: Future.wait([task!, taskParts!]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var task = snapshot.requireData.first as Task?;
             _headerContoller.text = task != null ? task.header : "";
             _rewardContoller.text = task != null ? task.reward.toString() : "";
-            //var tasks = snapshot.requireData.last as List<Task>;
+            moduleId = task?.moduleId ?? "";
+            var taskParts = snapshot.requireData.last as List<TaskPart>;
             return TaskEditBody(
               formKey: _formKey,
               headerController: _headerContoller,
               rewardController: _rewardContoller,
+              taskParts: taskParts,
+              onAddTaskPartClick: () => context.go(Uri(
+                  path: "/$taskPartCreateRoute",
+                  queryParameters: {"taskId": task?.id}).toString()),
             );
           } else if (snapshot.hasError) {
             return const ErrorPage();
@@ -63,6 +91,7 @@ class _TaskEditPageState extends State<TaskEditPage> {
               formKey: _formKey,
               headerController: _headerContoller,
               rewardController: _rewardContoller,
+              taskParts: [],
             );
           } else {
             return const Center(
@@ -74,7 +103,9 @@ class _TaskEditPageState extends State<TaskEditPage> {
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             _formKey.currentState?.save();
-            //updateModule();
+            if (_formKey.currentState!.validate()) {
+              updateTask();
+            }
           },
           child: const Icon(Icons.save)),
     );

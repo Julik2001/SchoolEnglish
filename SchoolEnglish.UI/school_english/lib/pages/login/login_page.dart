@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/message_builder.dart';
+import 'package:school_english/helpers/validator.dart';
 import 'package:school_english/localdata.dart';
 import 'package:school_english/pages/login/components/login_body.dart';
 
@@ -20,12 +21,17 @@ class _LoginPageState extends State<LoginPage> {
 
   void login(String email, String password) async {
     var jwt = await Api.login(email, password);
-    if (jwt != null) {
-      LocalData.saveJwt(jwt);
-      goToTeacherCodePage();
-    } else {
+    if (Validator.isNullOrEmpty(jwt)) {
       showLoginError();
+      return;
     }
+
+    await LocalData.saveJwt(jwt!);
+    var teacherCode = await Api.getTeacherCode();
+    if (!Validator.isNullOrEmpty(teacherCode)) {
+      await LocalData.saveTeacherCode(teacherCode!);
+    }
+    goToTeacherCodePage();
   }
 
   void goToTeacherCodePage() => context.go("/$teacherCodeRoute");

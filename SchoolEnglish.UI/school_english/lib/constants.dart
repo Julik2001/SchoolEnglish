@@ -19,6 +19,8 @@ const moduleCreateRoute = "module-create";
 const moduleEditRoute = "edit-module";
 const taskCreateRoute = "task-create";
 const taskEditRoute = "task-edit";
+const taskPartCreateRoute = "taskpart-create";
+const taskPartEditRoute = "taskpart-edit";
 const exerciseRoute = "exercise";
 
 // Краткая информация о приложении
@@ -60,4 +62,10 @@ const taskCreateHeader = "Создание задания";
 const taskCreateDescription = "Создайте новое задание";
 const taskEditHeader = "Редактирование задания";
 const taskEditDescription = "Измените задание";
-const taskPartsHeader = "Вопросы в задании";
+const taskPartsHeader = "Части задания";
+
+// Строки для страниц частей заданий
+const taskPartCreateHeader = "Создание части задания";
+const taskPartCreateDescription = "Создайте новую часть задания";
+const taskPartEditHeader = "Редактирование части задания";
+const taskPartEditDescription = "Измените часть задания";

@@ -5,6 +5,7 @@ using SchoolEnglish.Application.Common.Helpers;
 using SchoolEnglish.Application.Common.Mappings;
 using SchoolEnglish.Application.Interfaces;
 using SchoolEnglish.Persistence;
+using SchoolEnglish.WebApi.Options;
 using System.Reflection;
 
 
@@ -34,6 +35,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = JwtParamsHelper.GetSymmetricSecurityKey(),
         });
 builder.Services.AddAuthorization();
+
+builder.Services.Configure<TaskPartContentOptions>(builder.Configuration.GetSection(nameof(TaskPartContentOptions)));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

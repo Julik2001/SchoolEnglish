@@ -67,6 +67,7 @@ class _ModulesPageState extends State<ModulesPage> {
             if (snapshot.hasData) {
               return ModulesBody(
                 isModerator: roleIsModerator,
+                parentId: moduleId,
                 modules: snapshot.requireData,
                 onModuleClick: (newModuleId) {
                   setState(() {

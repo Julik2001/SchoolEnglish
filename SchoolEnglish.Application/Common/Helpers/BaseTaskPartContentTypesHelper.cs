@@ -18,14 +18,35 @@ namespace SchoolEnglish.Application.Common.Helpers
         { Id = Guid.Parse("DA28F7AB-8578-4BD5-A3FF-F5A879CA8FB2"), Name = "Расставить слова в правильном порядке" };
         public static TaskPartContentType RatioOfTextAndHeader { get; } = new TaskPartContentType 
         { Id = Guid.Parse("664AF0B5-648B-42F6-B319-B38947D7428C"), Name = "Соотнесение абзаца и заголовка" };
+        public static TaskPartContentType StatementFromText { get; } = new TaskPartContentType
+        { Id = Guid.Parse("BC7FF17F-09CB-44D7-85C4-EDBB04F309AD"), Name = "Утверждение из текста" };
         public static TaskPartContentType ArrangeParagraphsInCorrectOrder { get; } = new TaskPartContentType 
         { Id = Guid.Parse("E05BC2BB-0E42-44E0-8A93-E25BE11E361E"), Name = "Расставить абзацы в правильном порядке" };
 
         public static IEnumerable<TaskPartContentType> GetBaseTypes()
         {
             return new List<TaskPartContentType> { RatioOfWords, RatioOfWordsAndImage, ExpandBrackets, TranslateText, 
-                ChooseOneWord, ArrangeWordsInCorrectOrder, RatioOfTextAndHeader, ArrangeParagraphsInCorrectOrder };
+                ChooseOneWord, ArrangeWordsInCorrectOrder, RatioOfTextAndHeader, StatementFromText, ArrangeParagraphsInCorrectOrder };
         }
 
+        public static IEnumerable<TaskPartContentType> GetTypesWithTextToRead()
+        {
+            return new List<TaskPartContentType> { StatementFromText };
+        }
+
+        public static IEnumerable<TaskPartContentType> GetTypesWithAnswerVariants()
+        {
+            return new List<TaskPartContentType> { RatioOfWords, ChooseOneWord, RatioOfTextAndHeader, StatementFromText, ArrangeParagraphsInCorrectOrder };
+        }
+
+        public static IEnumerable<TaskPartContentType> GetTypesWithImage()
+        {
+            return new List<TaskPartContentType> { RatioOfWordsAndImage };
+        }
+
+        public static IEnumerable<TaskPartContentType> GetTypesWithAudio()
+        {
+            return new List<TaskPartContentType> { };
+        }
     }
 }

@@ -2,8 +2,10 @@
 {
     public class TaskPartContent
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }        
         public string? Text { get; set; }
+        public string? TextToRead { get; set; }
+        public string? AnswerVariants { get; set; }
         public string? ImagePath { get; set; }
         public string? AudioPath { get; set; }
         public Guid TypeId { get; set; }

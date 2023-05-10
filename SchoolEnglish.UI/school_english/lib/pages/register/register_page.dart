@@ -24,14 +24,10 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isTeacherUser = false;
 
   Future<void> register() async {
-    bool isSuccess = true;
     var role =
         isTeacherUser ? await Api.getTeacherRole() : await Api.getStudentRole();
 
-    if (role == null) {
-      isSuccess = false;
-      return;
-    }
+    if (role == null) return;
 
     var registerDto = RegisterDto(
         name: _nameController.text,
@@ -41,14 +37,13 @@ class _RegisterPageState extends State<RegisterPage> {
         roleId: role.id);
 
     var jwt = await Api.register(registerDto);
-    if (Validator.isNullOrEmpty(jwt)) isSuccess = false;
-
-    if (isSuccess) {
-      LocalData.saveJwt(jwt!);
-      goToTeacherCodePage();
-    } else {
+    if (Validator.isNullOrEmpty(jwt)) {
       showRegisterError();
+      return;
     }
+
+    await LocalData.saveJwt(jwt!);
+    goToTeacherCodePage();
   }
 
   void goToTeacherCodePage() => context.go("/$teacherCodeRoute");

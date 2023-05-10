@@ -11,6 +11,8 @@ import 'package:school_english/pages/modules/module_create_page/module_create_pa
 import 'package:school_english/pages/modules/module_edit_page/module_edit_page.dart';
 import 'package:school_english/pages/modules/modules_page/modules_page.dart';
 import 'package:school_english/pages/register/register_page.dart';
+import 'package:school_english/pages/task_part/taskpart_create_page/taskpart_create_page.dart';
+import 'package:school_english/pages/task_part/taskpart_edit_page/taskpart_edit_page.dart';
 import 'package:school_english/pages/tasks/task_create_page/task_create_page.dart';
 import 'package:school_english/pages/teacher_code/teacher_code_page.dart';
 import 'package:school_english/pages/profile/profile_page.dart';
@@ -113,10 +115,40 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
   GoRoute(
     path: "/$taskEditRoute",
     builder: (context, state) {
-      return TaskEditPage(
-        taskId: state.queryParams["taskId"],
-        moduleId: state.queryParams["moduleId"] ?? "",
-      );
+      var taskId = state.queryParams["taskId"];
+      if (Validator.isNullOrEmpty(taskId)) {
+        return const ErrorPage();
+      } else {
+        return TaskEditPage(
+          taskId: taskId!,
+        );
+      }
+    },
+  ),
+  GoRoute(
+    path: "/$taskPartCreateRoute",
+    builder: (context, state) {
+      var taskId = state.queryParams["taskId"];
+      if (Validator.isNullOrEmpty(taskId)) {
+        return const ErrorPage();
+      } else {
+        return TaskPartCreatePage(
+          taskId: taskId!,
+        );
+      }
+    },
+  ),
+  GoRoute(
+    path: "/$taskPartEditRoute",
+    builder: (context, state) {
+      var taskPartId = state.queryParams["taskPartId"];
+      if (Validator.isNullOrEmpty(taskPartId)) {
+        return const ErrorPage();
+      } else {
+        return TaskPartEditPage(
+          taskPartId: taskPartId!,
+        );
+      }
     },
   ),
   GoRoute(

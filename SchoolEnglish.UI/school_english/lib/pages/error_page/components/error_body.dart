@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_english/constants.dart';
 
 class ErrorBody extends StatelessWidget {
@@ -17,7 +18,12 @@ class ErrorBody extends StatelessWidget {
         Text(
           message,
           style: Theme.of(context).textTheme.bodyLarge,
-        )
+        ),
+        const SizedBox(
+          height: singleSpace,
+        ),
+        TextButton(
+            onPressed: () => context.go("/"), child: const Text("На главную"))
       ]),
     );
   }

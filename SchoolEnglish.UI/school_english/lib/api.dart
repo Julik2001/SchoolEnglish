@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:school_english/constants.dart';
 import 'package:school_english/localdata.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/models/register/registerDto.dart';
 import 'package:school_english/models/role/role.dart';
 import 'package:school_english/models/task/task.dart';
+import 'package:school_english/models/task_part/taskpart.dart';
+import 'package:school_english/models/task_part/taskpart_dto.dart';
+import 'package:school_english/models/taskpart_content_type/content_type.dart';
 
 abstract class Api {
   static Dio _client = Dio();
@@ -263,6 +269,170 @@ abstract class Api {
     } catch (ex) {
       debugPrint(ex.toString());
       return null;
+    }
+  }
+
+  static Future<bool> deleteTask(String taskId) async {
+    final url = "$apiUrl/Task/Delete/$taskId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.delete(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      return true;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
+  }
+
+  static Future<List<TaskPart>> getTaskParts(String taskId) async {
+    List<TaskPart> taskParts = [];
+    final url = "$apiUrl/TaskPart/GetTaskParts/$taskId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data["parts"] as List;
+      taskParts = json.map((e) => TaskPart.fromJson(e)).toList();
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return taskParts;
+  }
+
+  static Future<TaskPart?> getTaskPart(String taskPartId) async {
+    TaskPart? task;
+    final url = "$apiUrl/TaskPart/GetTaskPartWithContent/$taskPartId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      task = TaskPart.fromJson(json);
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return task;
+  }
+
+  static Future<String?> createOrUpdateTaskPart(
+      TaskPartDto taskPart, File? image, File? audio) async {
+    const url = "$apiUrl/TaskPart/CreateOrUpdate";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      final data = taskPart.toJson();
+      if (image != null) {
+        data.addAll({
+          "imageFile": await MultipartFile.fromFile(image.path,
+              filename: basename(image.path))
+        });
+      }
+      if (audio != null) {
+        data.addAll({
+          "audioFile": await MultipartFile.fromFile(audio.path,
+              filename: basename(audio.path))
+        });
+      }
+
+      var fromData = FormData.fromMap(data);
+      var response = await _client.post(url,
+          data: fromData, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
+    }
+  }
+
+  static Future<bool> deleteTaskPart(String taskPartId) async {
+    final url = "$apiUrl/TaskPart/Delete/$taskPartId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.delete(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      return true;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
+  }
+
+  static Future<List<TaskPartContentType>> getTaskPartContentTypes() async {
+    List<TaskPartContentType> tasks = [];
+    const url = "$apiUrl/TaskPartContentType/GetTypes";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data["contentTypes"] as List;
+      tasks = json.map((e) => TaskPartContentType.fromJson(e)).toList();
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return tasks;
+  }
+
+  static Future<bool> checkTypeHasImage(String typeId) async {
+    final url = "$apiUrl/TaskPartContentType/CheckTypeHasImage/$typeId";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> checkTypeHasTextToRead(String typeId) async {
+    final url = "$apiUrl/TaskPartContentType/CheckTypeHasTextToRead/$typeId";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> checkTypeHasAnswerVariants(String typeId) async {
+    final url =
+        "$apiUrl/TaskPartContentType/CheckTypeHasAnswerVariants/$typeId";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> checkTypeHasAudio(String typeId) async {
+    final url = "$apiUrl/TaskPartContentType/CheckTypeHasAudio/$typeId";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
     }
   }
 }
