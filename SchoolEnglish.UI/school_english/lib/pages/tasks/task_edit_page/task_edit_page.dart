@@ -20,6 +20,7 @@ class TaskEditPage extends StatefulWidget {
 class _TaskEditPageState extends State<TaskEditPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _headerContoller = TextEditingController();
+  final TextEditingController _timeContoller = TextEditingController();
   final TextEditingController _rewardContoller = TextEditingController();
   late Future<Task?>? task;
   late Future<List<TaskPart>>? taskParts;
@@ -38,6 +39,7 @@ class _TaskEditPageState extends State<TaskEditPage> {
     var task = Task(
       id: widget.taskId,
       header: _headerContoller.text,
+      timeInMinutes: int.parse(_timeContoller.text),
       reward: int.parse(_rewardContoller.text),
       moduleId: moduleId,
     );
@@ -72,12 +74,15 @@ class _TaskEditPageState extends State<TaskEditPage> {
           if (snapshot.hasData) {
             var task = snapshot.requireData.first as Task?;
             _headerContoller.text = task != null ? task.header : "";
+            _timeContoller.text =
+                task != null ? task.timeInMinutes.toString() : "";
             _rewardContoller.text = task != null ? task.reward.toString() : "";
             moduleId = task?.moduleId ?? "";
             var taskParts = snapshot.requireData.last as List<TaskPart>;
             return TaskEditBody(
               formKey: _formKey,
               headerController: _headerContoller,
+              timeController: _timeContoller,
               rewardController: _rewardContoller,
               taskParts: taskParts,
               onAddTaskPartClick: () => context.go(Uri(
@@ -90,6 +95,7 @@ class _TaskEditPageState extends State<TaskEditPage> {
             return TaskEditBody(
               formKey: _formKey,
               headerController: _headerContoller,
+              timeController: _timeContoller,
               rewardController: _rewardContoller,
               taskParts: [],
             );

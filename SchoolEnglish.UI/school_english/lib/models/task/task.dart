@@ -7,12 +7,14 @@ class Task {
   final String? id;
   final String moduleId;
   final String header;
+  final int timeInMinutes;
   final int reward;
 
   const Task(
       {required this.id,
       required this.moduleId,
       required this.header,
+      required this.timeInMinutes,
       required this.reward});
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);

@@ -15,11 +15,8 @@ namespace SchoolEnglish.Application.UserAnswers.Commands.CreateOrUpdateUserAnswe
         public async Task<Guid> Handle(CreateOrUpdateUserAnswerCommand request, CancellationToken cancellationToken)
         {
             UserAnswer? answer = null;
-            if (request.Id != null && request.Id != Guid.Empty)
-            {
-                answer = await _dbContext.UserAnswers.FirstOrDefaultAsync(role =>
-                    role.Id == request.Id, cancellationToken);
-            }
+            answer = await _dbContext.UserAnswers.FirstOrDefaultAsync(answer =>
+                    answer.TaskPartId == request.TaskPartId && answer.UserId == request.UserId, cancellationToken);
 
             if (answer == null)
             {
@@ -35,8 +32,6 @@ namespace SchoolEnglish.Application.UserAnswers.Commands.CreateOrUpdateUserAnswe
             else
             {
                 answer.Answer = request.Answer;
-                answer.UserId = request.UserId;
-                answer.TaskPartId = request.TaskPartId;
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);

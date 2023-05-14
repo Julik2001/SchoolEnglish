@@ -8,11 +8,13 @@ class TaskCreateBody extends StatelessWidget {
     super.key,
     this.formKey,
     this.headerController,
+    this.timeController,
     this.rewardController,
   });
 
   final GlobalKey<FormState>? formKey;
   final TextEditingController? headerController;
+  final TextEditingController? timeController;
   final TextEditingController? rewardController;
 
   @override
@@ -23,6 +25,7 @@ class TaskCreateBody extends StatelessWidget {
       child: TaskForm(
         formKey: formKey,
         headerController: headerController,
+        timeController: timeController,
         rewardController: rewardController,
       ),
     );

@@ -5,7 +5,6 @@ import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/validator.dart';
 import 'package:school_english/localdata.dart';
 import 'package:school_english/pages/error_page/error_page.dart';
-import 'package:school_english/pages/exercise/exercise_page.dart';
 import 'package:school_english/pages/login/login_page.dart';
 import 'package:school_english/pages/modules/module_create_page/module_create_page.dart';
 import 'package:school_english/pages/modules/module_edit_page/module_edit_page.dart';
@@ -13,12 +12,14 @@ import 'package:school_english/pages/modules/modules_page/modules_page.dart';
 import 'package:school_english/pages/register/register_page.dart';
 import 'package:school_english/pages/task_part/taskpart_create_page/taskpart_create_page.dart';
 import 'package:school_english/pages/task_part/taskpart_edit_page/taskpart_edit_page.dart';
+import 'package:school_english/pages/tasks/task_completion_page/task_completion_page.dart';
 import 'package:school_english/pages/tasks/task_create_page/task_create_page.dart';
+import 'package:school_english/pages/tasks/task_edit_page/task_edit_page.dart';
+import 'package:school_english/pages/tasks/task_report_page/task_report_page.dart';
+import 'package:school_english/pages/tasks/tasks_page/tasks_page.dart';
 import 'package:school_english/pages/teacher_code/teacher_code_page.dart';
 import 'package:school_english/pages/profile/profile_page.dart';
 import 'package:school_english/pages/welcome/welcome_page.dart';
-
-import 'pages/tasks/task_edit_page/task_edit_page.dart';
 
 void main() {
   runApp(const SchoolEnglish());
@@ -75,7 +76,9 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
   GoRoute(
     path: "/$modulesRoute",
     builder: (context, state) {
-      return const ModulesPage();
+      return ModulesPage(
+        moduleId: state.queryParams["moduleId"],
+      );
     },
   ),
   GoRoute(
@@ -152,9 +155,42 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
     },
   ),
   GoRoute(
-    path: "/$exerciseRoute",
+    path: "/$tasksRoute",
     builder: (context, state) {
-      return const ExercisePage();
+      var moduleId = state.queryParams["moduleId"];
+      if (Validator.isNullOrEmpty(moduleId)) {
+        return const ErrorPage();
+      } else {
+        return TasksPage(
+          moduleId: moduleId!,
+        );
+      }
+    },
+  ),
+  GoRoute(
+    path: "/$taskCompletionRoute",
+    builder: (context, state) {
+      var taskId = state.queryParams["taskId"];
+      if (Validator.isNullOrEmpty(taskId)) {
+        return const ErrorPage();
+      } else {
+        return TaskCompletionPage(
+          taskId: taskId!,
+        );
+      }
+    },
+  ),
+  GoRoute(
+    path: "/$taskReportRoute",
+    builder: (context, state) {
+      var taskId = state.queryParams["taskId"];
+      if (Validator.isNullOrEmpty(taskId)) {
+        return const ErrorPage();
+      } else {
+        return TaskReportPage(
+          taskId: taskId!,
+        );
+      }
     },
   ),
   GoRoute(

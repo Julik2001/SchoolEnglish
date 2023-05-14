@@ -17,6 +17,7 @@ class TaskCreatePage extends StatefulWidget {
 
 class _TaskCreatePageState extends State<TaskCreatePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _timeContoller = TextEditingController();
   final TextEditingController _headerContoller = TextEditingController();
   final TextEditingController _rewardContoller = TextEditingController();
 
@@ -24,6 +25,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
     var task = Task(
       id: null,
       header: _headerContoller.text,
+      timeInMinutes: int.parse(_timeContoller.text),
       reward: int.parse(_rewardContoller.text),
       moduleId: widget.moduleId,
     );
@@ -54,6 +56,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
       ),
       body: TaskCreateBody(
         formKey: _formKey,
+        timeController: _timeContoller,
         headerController: _headerContoller,
         rewardController: _rewardContoller,
       ),

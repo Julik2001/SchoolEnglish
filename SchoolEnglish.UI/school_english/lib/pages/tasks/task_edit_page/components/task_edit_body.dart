@@ -14,12 +14,14 @@ class TaskEditBody extends StatefulWidget {
       {super.key,
       required this.formKey,
       this.headerController,
+      this.timeController,
       this.rewardController,
       required this.taskParts,
       this.onAddTaskPartClick});
 
   final GlobalKey<FormState>? formKey;
   final TextEditingController? headerController;
+  final TextEditingController? timeController;
   final TextEditingController? rewardController;
   final List<TaskPart> taskParts;
   final void Function()? onAddTaskPartClick;
@@ -43,6 +45,7 @@ class _TaskEditBodyState extends State<TaskEditBody> {
           TaskForm(
             formKey: widget.formKey,
             headerController: widget.headerController,
+            timeController: widget.timeController,
             rewardController: widget.rewardController,
           ),
           const SizedBox(

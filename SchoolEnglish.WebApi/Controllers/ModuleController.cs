@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolEnglish.Application.Modules.Commands.CreateOrUpdateModule;
 using SchoolEnglish.Application.Modules.Commands.DeleteModule;
 using SchoolEnglish.Application.Modules.Queries;
+using SchoolEnglish.Application.Modules.Queries.CheckSubmodules;
 using SchoolEnglish.Application.Modules.Queries.GetModule;
 using SchoolEnglish.Application.Modules.Queries.GetModules;
 using SchoolEnglish.Application.Modules.Queries.GetSubmodules;
@@ -37,6 +38,15 @@ namespace SchoolEnglish.WebApi.Controllers
             var query = new GetModulesQuery();
             var vm = await Mediator.Send(query);
             return Ok(vm);
+        }
+
+        [Authorize]
+        [HttpGet("{moduleId}")]
+        public async Task<ActionResult<ModulesVm>> CheckSubmodules(Guid moduleId)
+        {
+            var query = new CheckSubmodulesQuery { ModuleId = moduleId };
+            var hasSubmodules = await Mediator.Send(query);
+            return Ok(hasSubmodules);
         }
 
         [Authorize]

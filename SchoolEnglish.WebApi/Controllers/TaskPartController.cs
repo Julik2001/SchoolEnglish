@@ -5,11 +5,14 @@ using Microsoft.Extensions.Options;
 using SchoolEnglish.Application.TaskParts.Commands.CreateOrUpdateTaskPart;
 using SchoolEnglish.Application.TaskParts.Commands.DeleteTaskPart;
 using SchoolEnglish.Application.TaskParts.Queries;
+using SchoolEnglish.Application.TaskParts.Queries.GetTaskPart;
 using SchoolEnglish.Application.TaskParts.Queries.GetTaskPartsInTask;
 using SchoolEnglish.Application.TaskParts.Queries.GetTaskPartWithContent;
 using SchoolEnglish.Application.TaskPartsContent.Commands.CreateOrUpdateTaskPartContent;
+using SchoolEnglish.Application.Users.Commands.UpdateBalance;
 using SchoolEnglish.WebApi.Models;
 using SchoolEnglish.WebApi.Options;
+using System.Security.Claims;
 
 namespace SchoolEnglish.WebApi.Controllers
 {
@@ -94,6 +97,43 @@ namespace SchoolEnglish.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid taskPartId)
         {
             var command = new DeleteTaskPartCommand { Id = taskPartId };
+            await Mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetImage(string imagePath)
+        {
+            try
+            {
+                var image = System.IO.File.OpenRead(Path.Combine(_options.ImageFolder, imagePath));
+                return File(image, "image/jpeg");
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
+        [Authorize]
+        [HttpPost("{taskPartId}")]
+        public async Task<IActionResult> PayForClue(Guid taskPartId)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimsIdentity.DefaultNameClaimType);
+            if (userIdClaim == null)
+            {
+                return BadRequest();
+            }
+
+            var query = new GetTaskPartQuery { TaskPartId = taskPartId };
+            var taskPart = await Mediator.Send(query);
+
+            var command = new UpdateBalanceCommand {
+                UserId = Guid.Parse(userIdClaim.Value),
+                ToAdd = false,
+                ToRemove = true,
+                BalanceDifference = taskPart.ClueCost 
+            };
             await Mediator.Send(command);
             return Ok();
         }

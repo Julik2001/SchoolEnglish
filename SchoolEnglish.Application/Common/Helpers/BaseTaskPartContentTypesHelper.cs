@@ -29,9 +29,14 @@ namespace SchoolEnglish.Application.Common.Helpers
                 ChooseOneWord, ArrangeWordsInCorrectOrder, RatioOfTextAndHeader, StatementFromText, ArrangeParagraphsInCorrectOrder };
         }
 
-        public static IEnumerable<TaskPartContentType> GetTypesWithTextToRead()
+        public static IEnumerable<TaskPartContentType> GetTypesWithMultilineText()
         {
             return new List<TaskPartContentType> { StatementFromText };
+        }
+
+        public static IEnumerable<TaskPartContentType> GetTypesWithTextToRead()
+        {
+            return new List<TaskPartContentType> { TranslateText,  };
         }
 
         public static IEnumerable<TaskPartContentType> GetTypesWithAnswerVariants()

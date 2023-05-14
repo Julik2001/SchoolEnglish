@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:school_english/constants.dart';
 
-class ModulesBaseBody extends StatelessWidget {
-  const ModulesBaseBody({super.key, required this.child});
+class CardBody extends StatelessWidget {
+  const CardBody({super.key, this.child});
 
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

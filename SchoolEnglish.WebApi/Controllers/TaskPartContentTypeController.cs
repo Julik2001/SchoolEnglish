@@ -5,6 +5,7 @@ using SchoolEnglish.Application.TaskPartsContentTypes.Queries.CheckContentTypeHa
 using SchoolEnglish.Application.TaskPartsContentTypes.Queries.CheckContentTypeHasAudio;
 using SchoolEnglish.Application.TaskPartsContentTypes.Queries.CheckContentTypeHasImage;
 using SchoolEnglish.Application.TaskPartsContentTypes.Queries.CheckContentTypeHasTextToRead;
+using SchoolEnglish.Application.TaskPartsContentTypes.Queries.CheckContentTypeTextIsMultiline;
 using SchoolEnglish.Application.TaskPartsContentTypes.Queries.GetContentTypes;
 
 namespace SchoolEnglish.WebApi.Controllers
@@ -26,6 +27,15 @@ namespace SchoolEnglish.WebApi.Controllers
             var query = new GetContentTypesQuery();
             var vm = await Mediator.Send(query);
             return Ok(vm);
+        }
+
+        [Authorize]
+        [HttpGet("{typeId}")]
+        public async Task<ActionResult<bool>> CheckTypeHasMultilineText(Guid typeId)
+        {
+            var query = new CheckContentTypeTextIsMultilineQuery { TypeId = typeId };
+            var result = await Mediator.Send(query);
+            return Ok(result);
         }
 
         [Authorize]

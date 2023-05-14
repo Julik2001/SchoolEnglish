@@ -121,5 +121,35 @@ namespace SchoolEnglish.WebApi.Controllers
 
             return Ok();
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<int>> GetUserBalance()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimsIdentity.DefaultNameClaimType);
+            if (userIdClaim == null)
+            {
+                return BadRequest();
+            }
+            var getUserQuery = new GetUserByIdQuery { UserId = Guid.Parse(userIdClaim.Value) };
+            var user = await Mediator.Send(getUserQuery);
+
+            return Ok(user.Balance);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserInfoVm>> GetUserInfo()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimsIdentity.DefaultNameClaimType);
+            if (userIdClaim == null)
+            {
+                return BadRequest();
+            }
+            var getUserQuery = new GetUserByIdQuery { UserId = Guid.Parse(userIdClaim.Value) };
+            var user = await Mediator.Send(getUserQuery);
+            var vm = _mapper.Map<UserInfoVm>(user);
+            return Ok(vm);
+        }
     }
 }

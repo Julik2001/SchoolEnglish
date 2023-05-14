@@ -26,6 +26,7 @@ namespace SchoolEnglish.Application.Tasks.Commands.CreateOrUpdateTask
                 {
                     Id = Guid.NewGuid(),
                     Header = request.Header,
+                    TimeInMinutes = request.TimeInMinutes,
                     Reward = request.Reward,
                     ModuleId = request.ModuleId,
                 };
@@ -34,6 +35,7 @@ namespace SchoolEnglish.Application.Tasks.Commands.CreateOrUpdateTask
             else
             {
                 task.Header = request.Header;
+                task.TimeInMinutes = request.TimeInMinutes;
                 task.Reward = request.Reward;
                 task.ModuleId = request.ModuleId;
             }

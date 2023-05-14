@@ -151,7 +151,7 @@ class _TaskPartContentFormState extends State<TaskPartContentForm> {
                 prefixIcon: Icon(Icons.abc),
                 border: OutlineInputBorder(),
                 hintText: "Текст части задания"),
-            keyboardType: TextInputType.text,
+            keyboardType: TextInputType.multiline,
           ),
           const SizedBox(
             height: singleSpace,

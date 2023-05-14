@@ -8,6 +8,7 @@ namespace SchoolEnglish.WebApi.Models
     {
         public Guid? Id { get; set; }
         public string Header { get; set; }
+        public int TimeInMinutes { get; set; }
         public int Reward { get; set; }
         public Guid ModuleId { get; set; }
 
@@ -18,6 +19,8 @@ namespace SchoolEnglish.WebApi.Models
                     opt => opt.MapFrom(taskDto => taskDto.Id))
                 .ForMember(taskCommand => taskCommand.Header,
                     opt => opt.MapFrom(taskDto => taskDto.Header))
+                .ForMember(taskCommand => taskCommand.TimeInMinutes,
+                    opt => opt.MapFrom(taskDto => taskDto.TimeInMinutes))
                 .ForMember(taskCommand => taskCommand.Reward,
                     opt => opt.MapFrom(taskDto => taskDto.Reward))
                 .ForMember(taskCommand => taskCommand.ModuleId,

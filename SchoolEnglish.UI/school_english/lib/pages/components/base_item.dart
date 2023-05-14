@@ -28,8 +28,11 @@ class BaseItem extends StatelessWidget {
               child: Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.all(singleSpace),
-                child:
-                    Text(title, style: Theme.of(context).textTheme.bodyLarge),
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  maxLines: 2,
+                ),
               ),
             ),
           ),

@@ -4,9 +4,14 @@ import 'package:school_english/helpers/validator.dart';
 
 class TaskForm extends StatelessWidget {
   const TaskForm(
-      {super.key, this.formKey, this.headerController, this.rewardController});
+      {super.key,
+      this.formKey,
+      this.timeController,
+      this.headerController,
+      this.rewardController});
 
   final GlobalKey<FormState>? formKey;
+  final TextEditingController? timeController;
   final TextEditingController? headerController;
   final TextEditingController? rewardController;
 
@@ -26,6 +31,26 @@ class TaskForm extends StatelessWidget {
               validator: (value) {
                 if (Validator.isNullOrEmpty(value)) {
                   return "Введите заголовок задания!";
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: singleSpace,
+            ),
+            TextFormField(
+              controller: timeController,
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.timer),
+                  border: OutlineInputBorder(),
+                  hintText: "Время выполнения",
+                  suffixText: "мин."),
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (Validator.isNullOrEmpty(value)) {
+                  return "Введите время выполнения!";
+                } else if (!Validator.validateStringNumber(value ?? "")) {
+                  return "Введено не число";
                 }
                 return null;
               },

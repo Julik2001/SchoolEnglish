@@ -7,6 +7,7 @@ const primaryColor = Color.fromARGB(255, 50, 74, 89);
 const singleSpace = 8.0;
 const borderRadius = 10.0;
 const errorIconSize = 100.0;
+const taskReportIconSize = 100.0;
 
 // Точки навигации
 const loginRoute = "login";
@@ -21,7 +22,9 @@ const taskCreateRoute = "task-create";
 const taskEditRoute = "task-edit";
 const taskPartCreateRoute = "taskpart-create";
 const taskPartEditRoute = "taskpart-edit";
-const exerciseRoute = "exercise";
+const tasksRoute = "tasks";
+const taskCompletionRoute = "task-completion";
+const taskReportRoute = "task-report";
 
 // Краткая информация о приложении
 const appName = "";
@@ -69,3 +72,6 @@ const taskPartCreateHeader = "Создание части задания";
 const taskPartCreateDescription = "Создайте новую часть задания";
 const taskPartEditHeader = "Редактирование части задания";
 const taskPartEditDescription = "Измените часть задания";
+
+// Строки для страниц выполнения заданий
+const answerVariantsHeader = "Choose the correct answer:";

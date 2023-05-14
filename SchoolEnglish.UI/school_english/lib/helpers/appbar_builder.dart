@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
+import 'package:school_english/helpers/message_builder.dart';
 import 'package:school_english/helpers/validator.dart';
 import 'package:school_english/localdata.dart';
+import 'package:school_english/pages/components/task_timer.dart';
+import 'package:school_english/pages/components/user_balance.dart';
 
 class AppBarBuilder {
   static Future<String?> _getUserFullname() async {
@@ -36,11 +39,43 @@ class AppBarBuilder {
       ),
       actions: [
         IconButton(
-            onPressed: () => context.go("/$modulesRoute"),
-            icon: const Icon(Icons.home)),
-        IconButton(
             onPressed: () => context.go("/$profileRoute"),
             icon: const Icon(Icons.person)),
+      ],
+    );
+  }
+
+  static Future<int?> _getBalance() async {
+    return Api.getUserBalance();
+  }
+
+  static AppBar buildTaskAppBar(BuildContext context, Duration time,
+      [void Function()? onTaskEnd]) {
+    return AppBar(
+      actions: [
+        TaskTimer(
+          time: time,
+          onTimeIsOver: onTaskEnd,
+        ),
+        const SizedBox(
+          width: singleSpace,
+        ),
+        FutureBuilder(
+          future: _getBalance(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return UserBalance(balance: snapshot.requireData ?? 0);
+            } else if (snapshot.hasError) {
+              MessageBuilder.showError(context, "Не удалось загрузить баланс!");
+              return Container();
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+        const SizedBox(
+          width: singleSpace,
+        ),
       ],
     );
   }

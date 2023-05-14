@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:school_english/api.dart';
 import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/message_builder.dart';
+import 'package:school_english/helpers/validator.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/pages/components/add_item.dart';
 import 'package:school_english/pages/components/base_item.dart';
@@ -52,7 +53,9 @@ class _ModulesBodyState extends State<ModulesBody> {
         padding: const EdgeInsets.all(singleSpace / 2),
         child: BaseItem(
           itemName: "модуль",
-          title: "${module.name} ${module.number}",
+          title: Validator.isNullOrEmpty(widget.parentId)
+              ? "${module.name} ${module.number}"
+              : "${module.number} ${module.name}",
           onClick: () {
             if (widget.onModuleClick != null) {
               widget.onModuleClick!(module.id);

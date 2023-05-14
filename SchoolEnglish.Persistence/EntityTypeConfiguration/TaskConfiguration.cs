@@ -11,6 +11,7 @@ namespace SchoolEnglish.Persistence.EntityTypeConfiguration
             builder.HasIndex(task => task.Id).IsUnique();
 
             builder.Property(task => task.Header).HasMaxLength(256);
+            builder.Property(task => task.TimeInMinutes);
             builder.Property(task => task.Reward);
 
             builder.HasOne(task => task.Module)

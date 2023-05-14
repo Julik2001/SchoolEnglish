@@ -7,6 +7,7 @@ namespace SchoolEnglish.Application.Tasks.Queries.GetTasksInModule
     {
         public Guid Id { get; set; }
         public string Header { get; set; }
+        public int TimeInMinutes { get; set; }
         public int Reward { get; set; }
         public Guid ModuleId { get; set; }
 
@@ -15,6 +16,8 @@ namespace SchoolEnglish.Application.Tasks.Queries.GetTasksInModule
             profile.CreateMap<Domain.Task, ModuleTaskDto>()
                 .ForMember(moduleTaskDto => moduleTaskDto.Id,
                     opt => opt.MapFrom(task => task.Id))
+                .ForMember(moduleTaskDto => moduleTaskDto.TimeInMinutes,
+                    opt => opt.MapFrom(task => task.TimeInMinutes))
                 .ForMember(moduleTaskDto => moduleTaskDto.Header,
                     opt => opt.MapFrom(task => task.Header))
                 .ForMember(moduleTaskDto => moduleTaskDto.Reward,

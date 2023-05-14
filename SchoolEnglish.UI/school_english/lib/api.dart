@@ -7,11 +7,14 @@ import 'package:school_english/constants.dart';
 import 'package:school_english/localdata.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/models/register/registerDto.dart';
+import 'package:school_english/models/reports/task_student_report.dart';
 import 'package:school_english/models/role/role.dart';
 import 'package:school_english/models/task/task.dart';
 import 'package:school_english/models/task_part/taskpart.dart';
 import 'package:school_english/models/task_part/taskpart_dto.dart';
 import 'package:school_english/models/taskpart_content_type/content_type.dart';
+import 'package:school_english/models/user/user.dart';
+import 'package:school_english/models/user_answers/user_answer.dart';
 
 abstract class Api {
   static Dio _client = Dio();
@@ -67,6 +70,34 @@ abstract class Api {
     }
   }
 
+  static Future<int?> getUserBalance() async {
+    const url = "$apiUrl/Auth/GetUserBalance";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
+    }
+  }
+
+  static Future<User?> getUserInfo() async {
+    User? user;
+    const url = "$apiUrl/Auth/GetUserInfo";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      user = User.fromJson(json);
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+    return user;
+  }
+
   static Future<bool> updateTeacherCode(String teacherCode) async {
     final url = "$apiUrl/Auth/UpdateTeacherCode/$teacherCode";
     try {
@@ -111,6 +142,19 @@ abstract class Api {
     }
 
     return modules;
+  }
+
+  static Future<bool> checkSubmodules(String moduleId) async {
+    final url = "$apiUrl/Module/CheckSubmodules/$moduleId";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
   }
 
   static Future<List<Module>> getSubmodules(String moduleId) async {
@@ -409,6 +453,19 @@ abstract class Api {
     }
   }
 
+  static Future<bool> checkTypeHasMultilineText(String typeId) async {
+    final url = "$apiUrl/TaskPartContentType/CheckTypeHasMultilineText/$typeId";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
+  }
+
   static Future<bool> checkTypeHasAnswerVariants(String typeId) async {
     final url =
         "$apiUrl/TaskPartContentType/CheckTypeHasAnswerVariants/$typeId";
@@ -434,5 +491,67 @@ abstract class Api {
       debugPrint(ex.toString());
       return false;
     }
+  }
+
+  static Future<File?> getImage(String imagePath) async {
+    File? image;
+    final url = "$apiUrl/TaskPart/GetImage/?imagePath=$imagePath";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return image;
+  }
+
+  static Future<bool> payForClue(String taskPartId) async {
+    final url = "$apiUrl/TaskPart/PayForClue/$taskPartId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.post(url, options: Options(headers: getHeaders(jwt)));
+      return true;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return false;
+    }
+  }
+
+  static Future<String?> createOrUpdateUserAnswer(UserAnswer userAnswer) async {
+    const url = "$apiUrl/UserAnswers/CreateOrUpdate";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response = await _client.post(url,
+          data: userAnswer.toJson(),
+          options: Options(headers: getHeaders(jwt)));
+      return response.data;
+    } catch (ex) {
+      debugPrint(ex.toString());
+      return null;
+    }
+  }
+
+  static Future<TaskStudentReport?> getTaskStudentReport(String taskId) async {
+    TaskStudentReport? taskReport;
+    final url = "$apiUrl/Report/GetTaskReport/$taskId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      taskReport = TaskStudentReport.fromJson(json);
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return taskReport;
   }
 }

@@ -5,7 +5,7 @@ import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/message_builder.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/helpers/appbar_builder.dart';
-import 'package:school_english/pages/modules/modules_page/components/modules_base_body.dart';
+import 'package:school_english/pages/components/card_body.dart';
 import 'package:school_english/pages/modules/modules_page/components/modules_body.dart';
 
 class ModulesPage extends StatefulWidget {
@@ -22,6 +22,7 @@ class _ModulesPageState extends State<ModulesPage> {
   String? moduleId;
   List<String?> parents = [];
   bool roleIsModerator = false;
+  bool hasSubmodules = false;
 
   void getModules() {
     if (moduleId != null) {
@@ -46,6 +47,10 @@ class _ModulesPageState extends State<ModulesPage> {
     getPermissions();
   }
 
+  void goToTasks(String moduleId) => context.go(
+      Uri(path: "/$tasksRoute", queryParameters: {"moduleId": moduleId})
+          .toString());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +65,7 @@ class _ModulesPageState extends State<ModulesPage> {
                   });
                 }
               : null),
-      body: ModulesBaseBody(
+      body: CardBody(
         child: FutureBuilder(
           future: modules,
           builder: (context, snapshot) {
@@ -69,15 +74,20 @@ class _ModulesPageState extends State<ModulesPage> {
                 isModerator: roleIsModerator,
                 parentId: moduleId,
                 modules: snapshot.requireData,
-                onModuleClick: (newModuleId) {
-                  setState(() {
-                    parents.add(moduleId);
-                    moduleId = newModuleId;
-                    getModules();
-                  });
+                onModuleClick: (newModuleId) async {
+                  hasSubmodules = await Api.checkSubmodules(newModuleId ?? "");
+                  if (hasSubmodules || roleIsModerator) {
+                    setState(() {
+                      parents.add(moduleId);
+                      moduleId = newModuleId;
+                      getModules();
+                    });
+                  } else {
+                    goToTasks(newModuleId ?? "");
+                  }
                 },
               );
-            } else if (snapshot.hasData) {
+            } else if (snapshot.hasError) {
               MessageBuilder.showError(context, "Что-то пошло не так");
               return Container();
             } else {
