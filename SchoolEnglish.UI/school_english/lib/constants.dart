@@ -25,6 +25,8 @@ const taskPartEditRoute = "taskpart-edit";
 const tasksRoute = "tasks";
 const taskCompletionRoute = "task-completion";
 const taskReportRoute = "task-report";
+const studentsRoute = "students";
+const teacherReportRoute = "teacher-report";
 
 // Краткая информация о приложении
 const appName = "";

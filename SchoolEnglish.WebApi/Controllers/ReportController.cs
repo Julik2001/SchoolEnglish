@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolEnglish.Application.Reports.Queries.GetReportForStudent;
+using SchoolEnglish.Application.Reports.Queries.GetReportForTeacher;
 using SchoolEnglish.Application.Tasks.Queries.GetTask;
 using SchoolEnglish.Application.Users.Commands.UpdateBalance;
 using SchoolEnglish.Application.UserTaskRewards.Commands.CreateUserTaskReward;
@@ -52,6 +53,15 @@ namespace SchoolEnglish.WebApi.Controllers
                 vm.Reward = 0;
             }
 
+            return Ok(vm);
+        }
+
+        [Authorize]
+        [HttpGet("{studentId}")]
+        public async Task<ActionResult<TeacherReportVm>> GetReportForTeacher(Guid studentId)
+        {
+            var query = new GetReportForTeacherQuery { StudentId = studentId };
+            var vm = await Mediator.Send(query);
             return Ok(vm);
         }
     }

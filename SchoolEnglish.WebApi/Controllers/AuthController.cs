@@ -6,6 +6,7 @@ using SchoolEnglish.Application.Users.Commands.CreateUser;
 using SchoolEnglish.Application.Users.Commands.GenerateUserTeacherCode;
 using SchoolEnglish.Application.Users.Commands.UpdateUserTeacherCode;
 using SchoolEnglish.Application.Users.Queries.AuthenticateUser;
+using SchoolEnglish.Application.Users.Queries.GetStudents;
 using SchoolEnglish.Application.Users.Queries.GetUserByEmailAndPassword;
 using SchoolEnglish.Application.Users.Queries.GetUserById;
 using SchoolEnglish.WebApi.Models;
@@ -149,6 +150,25 @@ namespace SchoolEnglish.WebApi.Controllers
             var getUserQuery = new GetUserByIdQuery { UserId = Guid.Parse(userIdClaim.Value) };
             var user = await Mediator.Send(getUserQuery);
             var vm = _mapper.Map<UserInfoVm>(user);
+            return Ok(vm);
+        }
+
+        [Authorize]
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserInfoVm>> GetUserInfoById(Guid userId)
+        {
+            var query = new GetUserByIdQuery { UserId = userId };
+            var user = await Mediator.Send(query);
+            var vm = _mapper.Map<UserInfoVm>(user);
+            return Ok(vm);
+        }
+
+        [Authorize]
+        [HttpGet("{teacherCode}")]
+        public async Task<ActionResult<StudentsVm>> GetStudents(string teacherCode)
+        {
+            var query = new GetStudentsQuery { TeacherCode = teacherCode };
+            var vm = await Mediator.Send(query);
             return Ok(vm);
         }
     }

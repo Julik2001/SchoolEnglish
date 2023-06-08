@@ -8,6 +8,7 @@ import 'package:school_english/localdata.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/models/register/registerDto.dart';
 import 'package:school_english/models/reports/task_student_report.dart';
+import 'package:school_english/models/reports/teacher_report.dart';
 import 'package:school_english/models/role/role.dart';
 import 'package:school_english/models/task/task.dart';
 import 'package:school_english/models/task_part/taskpart.dart';
@@ -70,6 +71,24 @@ abstract class Api {
     }
   }
 
+  static Future<List<User>> getStudents() async {
+    List<User> students = [];
+    final teacherCode = await LocalData.getTeacherCode();
+    final url = "$apiUrl/Auth/GetStudents/$teacherCode";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data["students"] as List;
+      students = json.map((e) => User.fromJson(e)).toList();
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return students;
+  }
+
   static Future<int?> getUserBalance() async {
     const url = "$apiUrl/Auth/GetUserBalance";
     try {
@@ -86,6 +105,21 @@ abstract class Api {
   static Future<User?> getUserInfo() async {
     User? user;
     const url = "$apiUrl/Auth/GetUserInfo";
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      user = User.fromJson(json);
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+    return user;
+  }
+
+  static Future<User?> getUserInfoById(String userId) async {
+    User? user;
+    final url = "$apiUrl/Auth/GetUserInfoById/$userId";
     try {
       final jwt = await LocalData.getJwt();
       var response =
@@ -553,5 +587,22 @@ abstract class Api {
     }
 
     return taskReport;
+  }
+
+  static Future<TeacherReport?> getTeacherReport(String studentId) async {
+    TeacherReport? report;
+    final url = "$apiUrl/Report/GetReportForTeacher/$studentId";
+
+    try {
+      final jwt = await LocalData.getJwt();
+      var response =
+          await _client.get(url, options: Options(headers: getHeaders(jwt)));
+      var json = response.data;
+      report = TeacherReport.fromJson(json);
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+
+    return report;
   }
 }

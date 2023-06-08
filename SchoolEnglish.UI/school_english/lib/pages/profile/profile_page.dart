@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:school_english/api.dart';
 import 'package:school_english/helpers/appbar_builder.dart';
 import 'package:school_english/models/user/user.dart';
-import 'package:school_english/pages/error_page/error_page.dart';
+import 'package:school_english/pages/error/error_page.dart';
 import 'package:school_english/pages/profile/components/profile_body.dart';
 
 class ProfilePage extends StatefulWidget {

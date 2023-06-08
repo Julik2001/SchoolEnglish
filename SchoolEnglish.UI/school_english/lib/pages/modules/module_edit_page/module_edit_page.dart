@@ -5,7 +5,7 @@ import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/message_builder.dart';
 import 'package:school_english/models/module/module.dart';
 import 'package:school_english/models/task/task.dart';
-import 'package:school_english/pages/error_page/error_page.dart';
+import 'package:school_english/pages/error/error_page.dart';
 import 'package:school_english/pages/modules/module_edit_page/components/module_edit_body.dart';
 
 class ModuleEditPage extends StatefulWidget {

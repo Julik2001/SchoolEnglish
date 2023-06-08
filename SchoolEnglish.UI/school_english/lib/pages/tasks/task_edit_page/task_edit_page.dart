@@ -5,7 +5,7 @@ import 'package:school_english/constants.dart';
 import 'package:school_english/helpers/message_builder.dart';
 import 'package:school_english/models/task/task.dart';
 import 'package:school_english/models/task_part/taskpart.dart';
-import 'package:school_english/pages/error_page/error_page.dart';
+import 'package:school_english/pages/error/error_page.dart';
 import 'package:school_english/pages/tasks/task_edit_page/components/task_edit_body.dart';
 
 class TaskEditPage extends StatefulWidget {

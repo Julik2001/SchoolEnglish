@@ -8,7 +8,7 @@ import "package:school_english/helpers/validator.dart";
 import "package:school_english/models/task/task.dart";
 import "package:school_english/models/task_part/taskpart.dart";
 import "package:school_english/models/user_answers/user_answer.dart";
-import "package:school_english/pages/error_page/error_page.dart";
+import 'package:school_english/pages/error/error_page.dart';
 import "package:school_english/pages/tasks/task_completion_page/components/task_completion_body.dart";
 
 class TaskCompletionPage extends StatefulWidget {
