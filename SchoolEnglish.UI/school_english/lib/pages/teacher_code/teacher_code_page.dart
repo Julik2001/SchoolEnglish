@@ -53,6 +53,8 @@ class _TeacherCodePageState extends State<TeacherCodePage> {
 
   void goToModulesPage() => context.go("/$modulesRoute");
 
+  void goToStudentsPage() => context.go("/$studentsRoute");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,8 +75,8 @@ class _TeacherCodePageState extends State<TeacherCodePage> {
                 if (!userIsTeacher && _formKey.currentState!.validate()) {
                   updateTeacherCode();
                 } else if (userIsTeacher) {
-                  goToModulesPage();
                   LocalData.saveTeacherCode(_teacherCode!);
+                  goToStudentsPage();
                 }
               },
               child: const Icon(Icons.arrow_forward))
