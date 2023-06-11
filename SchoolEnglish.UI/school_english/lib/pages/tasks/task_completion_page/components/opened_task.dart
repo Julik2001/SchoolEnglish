@@ -50,7 +50,7 @@ class _OpenedTaskState extends State<OpenedTask> {
               formKey.currentState!.save();
               if (formKey.currentState!.validate() &&
                   widget.onAnswerChanged != null) {
-                widget.onAnswerChanged!(answer);
+                widget.onAnswerChanged!(answer.trim());
               }
             },
             multiline: widget.multilineAnswer,

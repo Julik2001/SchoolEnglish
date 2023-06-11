@@ -79,7 +79,7 @@ class _ClosedTaskState extends State<ClosedTask> {
             child: DragTarget<String>(
           onAccept: (data) {
             if (widget.onAnswerChanged != null) {
-              widget.onAnswerChanged!(data);
+              widget.onAnswerChanged!(data.trim());
             }
             setState(() {
               answerDropped = true;
