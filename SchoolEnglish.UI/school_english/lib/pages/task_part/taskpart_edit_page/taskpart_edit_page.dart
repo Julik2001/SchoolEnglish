@@ -49,13 +49,13 @@ class _TaskPartEditPageState extends State<TaskPartEditPage> {
   void updateTaskPart() async {
     var taskPart = TaskPartDto(
         id: widget.taskPartId,
-        number: _numberController.text,
-        rightAnswer: _rightAnswerController.text,
-        clueText: _clueTextController.text,
+        number: _numberController.text.trim(),
+        rightAnswer: _rightAnswerController.text.trim(),
+        clueText: _clueTextController.text.trim(),
         clueCost: int.parse(_clueCostController.text),
-        text: _textController.text,
-        textToRead: _textToReadController.text,
-        answerVariants: _answerVariantsController.text,
+        text: _textController.text.trim(),
+        textToRead: _textToReadController.text.trim(),
+        answerVariants: _answerVariantsController.text.trim(),
         taskId: taskId!,
         typeId: currentTypeId!);
 

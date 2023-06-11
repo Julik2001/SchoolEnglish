@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SchoolEnglish.Application.Common.Helpers;
 using SchoolEnglish.Application.Interfaces;
 
 namespace SchoolEnglish.Application.Reports.Queries.GetReportForTeacher
@@ -21,11 +22,12 @@ namespace SchoolEnglish.Application.Reports.Queries.GetReportForTeacher
                 .Select(answer => answer.TaskPart.Task).Distinct().CountAsync();
             vm.TasksCompleted = tasksCompleted;
 
-            var correctAnswers = await _dbContext.UserAnswers.Where(answer => answer.UserId == request.StudentId)
-                .CountAsync(answer => answer.Answer == answer.TaskPart.RightAnswer);
+            var answers = await _dbContext.UserAnswers.Where(answer => answer.UserId == request.StudentId)
+                .Select(answer => new KeyValuePair<string, string>(answer.Answer, answer.TaskPart.RightAnswer)).ToListAsync();
 
-            var wrongAnswers = await _dbContext.UserAnswers.Where(answer => answer.UserId == request.StudentId)
-                .CountAsync(answer => answer.Answer != answer.TaskPart.RightAnswer);
+            var correctAnswers = answers.Count(answer => AnswersHelper.CheckAnswer(answer.Key, answer.Value));
+
+            var wrongAnswers = answers.Count(answer => !AnswersHelper.CheckAnswer(answer.Key, answer.Value));
 
             var percentage = correctAnswers / (double)(correctAnswers + wrongAnswers) * 100;
             vm.CorrectAnswersPercentage = percentage;

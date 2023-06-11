@@ -44,13 +44,13 @@ class _TaskPartCreatePageState extends State<TaskPartCreatePage> {
 
   void createTaskPart() async {
     var taskPart = TaskPartDto(
-        number: _numberController.text,
-        rightAnswer: _rightAnswerController.text,
-        clueText: _clueTextController.text,
+        number: _numberController.text.trim(),
+        rightAnswer: _rightAnswerController.text.trim(),
+        clueText: _clueTextController.text.trim(),
         clueCost: int.parse(_clueCostController.text),
-        text: _textController.text,
-        textToRead: _textToReadController.text,
-        answerVariants: _answerVariantsController.text,
+        text: _textController.text.trim(),
+        textToRead: _textToReadController.text.trim(),
+        answerVariants: _answerVariantsController.text.trim(),
         taskId: widget.taskId,
         typeId: currentTypeId!);
 

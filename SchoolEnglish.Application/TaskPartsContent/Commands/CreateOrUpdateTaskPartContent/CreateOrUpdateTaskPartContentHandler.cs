@@ -38,10 +38,17 @@ namespace SchoolEnglish.Application.TaskPartsContent.Commands.CreateOrUpdateTask
                 taskPartContent.Text = request.Text;
                 taskPartContent.TextToRead = request.TextToRead;
                 taskPartContent.AnswerVariants = request.AnswerVariants;
-                taskPartContent.ImagePath = request.ImagePath;
-                taskPartContent.AudioPath = request.AudioPath;
                 taskPartContent.TypeId = request.TypeId;
                 taskPartContent.TaskPartId = request.TaskPartId;
+
+                if (!string.IsNullOrEmpty(request.ImagePath))
+                {
+                    taskPartContent.ImagePath = request.ImagePath;
+                }
+                if (!string.IsNullOrEmpty(request.AudioPath))
+                {
+                    taskPartContent.AudioPath = request.AudioPath;
+                }
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);
